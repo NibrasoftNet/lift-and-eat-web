@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: prod.Dockerfile
-    ports:
-      - "3009" # Expose port only for the first instance
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.lift-and-eat-frontend.rule=Host(`lift-and-eat.nibrasoft.com`)"
@@ -20,7 +18,7 @@ services:
       - "~/shared_vps/traefik/certs:/letsencrypt" # Ensure correct path and permissions for volumes
     networks:
       - traefikNetwork
-      - liftAndEatNet
+      - lift-and-eatNet
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3009/ || exit 1"]
@@ -31,6 +29,6 @@ services:
 networks:
   traefikNetwork:
     external: true
-  liftAndEatNet:
+  lift-and-eatNetNet:
     driver: bridge
     internal: true
