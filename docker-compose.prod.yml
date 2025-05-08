@@ -29,6 +29,6 @@ services:
 networks:
   traefikNetwork:
     external: true
-  lift-and-eatNetNet:
+  lift-and-eatNet:
     driver: bridge
     internal: true
