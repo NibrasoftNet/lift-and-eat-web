@@ -23,7 +23,7 @@ services:
       - lift-and-eatNet
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3009/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/ || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
