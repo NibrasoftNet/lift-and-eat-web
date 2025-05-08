@@ -5,17 +5,14 @@ services:
     build:
       context: .
       dockerfile: prod.Dockerfile
-    ports:
-      - "3009" # Expose port only for the first instance
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.lift-and-eat-frontend.rule=Host(`lift-and-eat.nibrasoft.com`)"
       - "traefik.http.routers.lift-and-eat-frontend.entrypoints=websecure"
       - "traefik.http.routers.lift-and-eat-frontend.tls=true"
       - "traefik.http.routers.lift-and-eat-frontend.tls.certresolver=le"
-      - "traefik.http.routers.lift-and-eat-frontend.tls.domains[0].main=lift-and-eat.nibrasoft.com"
-      - "traefik.http.middlewares.lift-and-eat-frontend-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.lift-and-eat-frontend.middlewares=lift-and-eat-frontend-redirect"
+      - "traefik.http.services.lift-and-eat-frontend.loadbalancer.server.port=3009"
+
     volumes:
       - "~/shared_vps/traefik/certs:/letsencrypt" # Ensure correct path and permissions for volumes
     networks:
