@@ -26,7 +26,7 @@ RUN npm run build
 # Create the production image
 FROM base AS runner
 ENV NODE_ENV production
-ENV PORT 3009
+ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Install curl in the final image
@@ -54,7 +54,7 @@ RUN mkdir -p .next && chown nextjs:nodejs .next
 USER nextjs
 
 # Expose the application port
-EXPOSE 3009
+EXPOSE 3000
 
 # Start the application
 CMD ["node", "server.js"]
