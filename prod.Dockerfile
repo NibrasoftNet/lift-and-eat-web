@@ -21,7 +21,6 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . ./ 
 
 # Build the Next.js application
-RUN npx prisma generate
 RUN npm run build
 
 # Create the production image
