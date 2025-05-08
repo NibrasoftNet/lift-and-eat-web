@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  lms-frontend:
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    ports:
+      - "3000" # Expose port only for the first instance
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lms-frontend.rule=Host(`lms.genydev.com`)"
+      - "traefik.http.routers.lms-frontend.entrypoints=websecure"
+      - "traefik.http.routers.lms-frontend.tls=true"
+      - "traefik.http.routers.lms-frontend.tls.certresolver=le"
+      - "traefik.http.routers.lms-frontend.tls.domains[0].main=lms.genydev.com"
+      - "traefik.http.middlewares.lms-frontend-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.lms-frontend.middlewares=lms-frontend-redirect"
+    volumes:
+      - "~/shared_vps/traefik/certs:/letsencrypt" # Ensure correct path and permissions for volumes
+    networks:
+      - traefikNetwork
+      - lmsNet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  traefikNetwork:
+    external: true
+  lmsNet:
+    driver: bridge
+    internal: true
