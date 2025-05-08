@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: prod.Dockerfile
+    ports:
+      - "3009" # Expose port only for the first instance
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.lift-and-eat-frontend.rule=Host(`lift-and-eat.nibrasoft.com`)"
