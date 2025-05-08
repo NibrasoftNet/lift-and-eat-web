@@ -31,6 +31,6 @@ services:
 networks:
   traefikNetwork:
     external: true
-  liftAndEatNetNet:
+  liftAndEatNet:
     driver: bridge
     internal: true
