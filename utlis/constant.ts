@@ -1,0 +1,1 @@
+export const heroImage = 'images/hero-image.jpg'
