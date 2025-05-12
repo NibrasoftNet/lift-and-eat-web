@@ -2,7 +2,7 @@
 
 import { DirectionProvider } from '@radix-ui/react-direction';
 import React from 'react';
-import { ThemeDirectionType } from '@/utils/types/settings.type';
+import { ThemeDirectionType } from '@/utlis/types/settings.type';
 
 export function ClientDirectionProvider({ dir, children }: {
   dir: ThemeDirectionType;

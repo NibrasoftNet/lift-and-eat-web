@@ -10,7 +10,19 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: ["**/.next/**", "**/node_modules/**", "**/dist/**"],
+  },
+  // Existing Next.js and Prettier compatibility
   ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+
+  // Override the rule to disable it
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-unused-expressions": "error",
+    },
+  },
 ];
 
 export default eslintConfig;
