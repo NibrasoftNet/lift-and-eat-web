@@ -14,6 +14,7 @@ export default bundleAnalyzer(
       eslint: {
         dirs: ['.'],
       },
+      output: 'standalone',
       poweredByHeader: false,
       reactStrictMode: true,
       images: {
