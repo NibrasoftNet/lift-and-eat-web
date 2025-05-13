@@ -167,6 +167,15 @@
   border-radius: 30px;
 }
 
+.gsap-text {
+  z-index: 10;
+  position: relative;
+}
+.gsap-image {
+  z-index: 20;
+  position: relative;
+}
+
 @media (min-width: 768px) {
   .mockup-phone {
     max-width: 320px;

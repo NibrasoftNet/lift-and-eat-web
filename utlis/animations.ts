@@ -8,7 +8,7 @@ export const initGSAP = () => {
   }
 };
 
-// Parallax effect for sections
+// Parallax effect for general sections
 export const createParallaxEffect = (
   sectionId: string,
   imageElement: string,
@@ -102,5 +102,49 @@ export const createSlideInAnimation = (
         },
       }
     );
+  });
+};
+
+// Hero-specific parallax: text slides behind image
+export const createHeroParallaxEffect = () => {
+  if (typeof window === "undefined") return;
+
+  const hero = document.querySelector("#hero");
+  const text = hero?.querySelector(".gsap-text");
+  const image = hero?.querySelector(".gsap-image");
+
+  console.log("Hero Parallax:", { hero, text, image });
+
+  if (!hero || !text || !image) return;
+
+  // Ensure stacking context
+  gsap.set(hero, { position: "relative" });
+  gsap.set(text, { zIndex: 10, position: "relative" });
+  gsap.set(image, { zIndex: 20, position: "relative" });
+
+  // Animate TEXT (behind)
+  gsap.to(text, {
+    scrollTrigger: {
+      trigger: hero,
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+    },
+    y: -100,
+    opacity: 0.3,
+    ease: "none",
+  });
+
+  // Animate IMAGE (above)
+  gsap.to(image, {
+    scrollTrigger: {
+      trigger: hero,
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+    },
+    y: -30,
+    scale: 1.05,
+    ease: "none",
   });
 };
