@@ -12,26 +12,27 @@ import {
   createParallaxEffect,
   createFadeInAnimation,
   createSlideInAnimation,
-  createHeroParallaxEffect,
 } from '@/utlis/animations';
 
 const AnimatedLanding = () => {
   useEffect(() => {
+    // Initialize GSAP
     initGSAP();
 
-    // Hero-specific parallax
-    createHeroParallaxEffect();
-
-    // General parallax effects for other sections
+    // Create parallax effects for each section
+    createParallaxEffect("hero", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("features", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("ai", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("dashboard", ".gsap-image", ".gsap-text", "down");
 
+    // Create fade-in animations
     createFadeInAnimation(".gsap-title");
     createFadeInAnimation(".gsap-feature");
 
+    // Create slide-in animations
     createSlideInAnimation(".gsap-text", "left");
     createSlideInAnimation(".gsap-image", "right");
+
   }, []);
 
   return (

@@ -1,9 +1,10 @@
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Apple, Play } from "lucide-react";
 import { heroImage } from '@/utlis/constant';
 import Image from 'next/image';
 import { useTranslations } from 'use-intl';
+import AndroidStoreIcon from '@/components/icons/AndroidStoreIcon';
+import AppleStoreIcon from '@/components/icons/AppleStoreIcon';
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -12,33 +13,29 @@ const HeroSection = () => {
     <section
       id="hero"
       ref={sectionRef}
-      className="section flex-col mt-10"
+      className="section hero-bg min-h-screen flex items-center"
     >
       <div className="container mx-auto relative">
         <div className="gsap-text relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
             {t('heroTitle')}{" "}
-            <span className="text-nutrition-green">{t('heroSubTitle')}.</span>
+            <span className="text-primary">{t('heroSubTitle')}.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-700 max-w-xl mx-auto mt-4">
             {t('heroSubTitle')}
           </p>
-          <div className="flex flex-wrap justify-center gap-4 pt-8">
-            <Button className="bg-black hover:bg-gray-800 text-white flex items-center gap-2 px-6 py-6">
-              <Apple className="h-6 w-6" />
-              <div className="flex flex-col items-start">
-                <span className="text-lg font-semibold">App Store</span>
-              </div>
+          <div className="flex flex-wrap justify-center gap-4 pt-4">
+            <Button className="hover:bg-gray-800 text-white flex items-center gap-2 p-2">
+              <AppleStoreIcon />
+              <span className="font-semibold">App Store</span>
             </Button>
-            <Button className="bg-black hover:bg-gray-800 text-white flex items-center gap-2 px-6 py-6">
-              <Play className="h-6 w-6" />
-              <div className="flex flex-col items-start">
-                <span className="text-lg font-semibold">Google Play</span>
-              </div>
+            <Button className="hover:bg-gray-800 text-white flex items-center gap-2 p-2">
+              <AndroidStoreIcon />
+              <span className="font-semibold">Google Play</span>
             </Button>
           </div>
         </div>
-        <div className="flex justify-center gsap-image relative z-20 mt-4">
+        <div className="flex justify-center gsap-image relative z-20 mt-24">
           <div className="mockup-phone">
             <div className="mockup-screen">
               <Image

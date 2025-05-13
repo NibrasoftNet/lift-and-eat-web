@@ -1,7 +1,12 @@
 import { useRef } from "react";
+import { useTranslations } from 'use-intl';
+import { Card, CardContent } from '../ui/card';
+import Image from 'next/image';
+import { aiAssistantImage } from '@/utlis/constant';
 
 const AISection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('Landing');
 
   return (
     <section
@@ -12,45 +17,58 @@ const AISection = () => {
       <div className="container mx-auto">
         <div className="text-center mb-12 gsap-title">
           <h2 className="text-3xl md:text-4xl font-bold">
-            Smarter Meal Plans with{" "}
+            {t('aiSectionTitle')}{" "}
             <span className="text-nutrition-blue">AI</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="space-y-6 gsap-text">
-            <p className="text-lg text-gray-700">
-              Our advanced AI technology analyzes your preferences, dietary restrictions, and goals to create perfectly balanced meal plans tailored just for you.
+            <p className="text-lg">
+              {t('aiSectionDesc')}
             </p>
-
             <div className="space-y-6">
-              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md gsap-feature">
-                <h3 className="font-semibold text-xl mb-2">Personalized Recommendations</h3>
+              <Card className="border-l-4 border-primary gsap-feature">
+                <CardContent className="p-4 flex flex-col items-start gap-4">
+                <h3 className="font-semibold text-xl mb-2">
+                  {t('aiSectionCardOneTitle')}
+                </h3>
                 <p className="text-gray-600">
-                  The more you use the app, the more our AI learns about your preferences and adjusts recommendations accordingly.
+                  {t('aiSectionCardOneDesc')}
                 </p>
-              </div>
+                </CardContent>
+              </Card>
+              <Card className="border-l-4 border-primary gsap-feature">
+                <CardContent className="p-4 flex flex-col items-start gap-4">
+                <h3 className="font-semibold text-xl mb-2">
+                  {t('aiSectionCardTwoTitle')}
+                </h3>
+                <p className="text-gray-600">
+                  {t('aiSectionCardTwoDesc')}
+                </p>
+                </CardContent>
+              </Card>
 
-              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md gsap-feature">
-                <h3 className="font-semibold text-xl mb-2">Adaptive Meal Plans</h3>
+            <Card className="border-l-4 border-primary gsap-feature">
+              <CardContent className="p-4 flex flex-col items-start gap-4">
+                <h3 className="font-semibold text-xl mb-2">
+                  {t('aiSectionCardThreeTitle')}
+                </h3>
                 <p className="text-gray-600">
-                  As your goals or preferences change, our AI automatically adapts your meal plans to keep you on track.
+                  {t('aiSectionCardThreeDesc')}
                 </p>
-              </div>
-
-              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md gsap-feature">
-                <h3 className="font-semibold text-xl mb-2">Smart Grocery Lists</h3>
-                <p className="text-gray-600">
-                  Get automatically generated shopping lists based on your meal plans to streamline your grocery shopping.
-                </p>
-              </div>
+              </CardContent>
+            </Card>
             </div>
           </div>
 
           <div className="gsap-image">
-            <img
-              src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            <Image
+              src={aiAssistantImage}
+              width={300}
+              height={600}
               alt="AI Meal Planning"
+              unoptimized={true}
               className="w-full h-auto rounded-lg shadow-xl"
             />
           </div>

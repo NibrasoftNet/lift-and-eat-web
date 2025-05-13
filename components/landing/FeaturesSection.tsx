@@ -20,10 +20,10 @@ const FeaturesSection = () => {
           <div className="order-2 md:order-1 gsap-image">
             <Image
               src={featuresImage}
-              width={500}
-              height={1200}
+              width={300}
+              height={600}
               alt="Nutrition Plans"
-              className="w-full h-auto rounded-lg shadow-xl"
+              className="w-full h-auto rounded-lg shadow-2xl"
             />
           </div>
           <div className="space-y-8 order-1 md:order-2 gsap-text">
@@ -36,9 +36,9 @@ const FeaturesSection = () => {
               </p>
             </div>
             <div className="space-y-4">
-              <Card className="border-l-4 border-nutrition-green gsap-feature">
+              <Card className="border-l-4 border-primary gsap-feature">
                 <CardContent className="p-4 flex items-start gap-4">
-                  <CheckCircle className="text-nutrition-green mt-1 flex-shrink-0" />
+                  <CheckCircle className="text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-lg">
                       {t('featuresCardOneTitle')}
@@ -48,9 +48,9 @@ const FeaturesSection = () => {
                 </CardContent>
               </Card>
 
-              <Card className="border-l-4 border-nutrition-blue gsap-feature">
+              <Card className="border-l-4 border-primary gsap-feature">
                 <CardContent className="p-4 flex items-start gap-4">
-                  <CheckCircle className="text-nutrition-blue mt-1 flex-shrink-0" />
+                  <CheckCircle className="text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-lg">
                       {t('featuresCardTwoTitle')}
@@ -60,9 +60,9 @@ const FeaturesSection = () => {
                 </CardContent>
               </Card>
 
-              <Card className="border-l-4 border-nutrition-light-green gsap-feature">
+              <Card className="border-l-4 border-primary gsap-feature">
                 <CardContent className="p-4 flex items-start gap-4">
-                  <CheckCircle className="text-nutrition-light-green mt-1 flex-shrink-0" />
+                  <CheckCircle className="text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-lg">
                       {t('featuresCardThreeTitle')}
