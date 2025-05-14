@@ -29,13 +29,13 @@ const HeroSection = () => {
           </h4>
           <div className="flex flex-wrap justify-center gap-4 pt-4">
             <Link
-              href='https://lift-and-eat.nibrasoft.com'
+              href='https://play.google.com'
               target="_blank" rel="noopener noreferrer"
               className='cursor-pointer'>
               <AndroidStoreIcon />
             </Link>
             <Link
-              href='https://lift-and-eat.nibrasoft.com'
+              href='https://www.apple.com'
               target="_blank" rel="noopener noreferrer"
               className='cursor-pointer'>
               <AppleStoreIcon />

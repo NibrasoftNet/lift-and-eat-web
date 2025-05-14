@@ -12,8 +12,8 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 const isAuthPage = createRouteMatcher([
-  '/sign-in(.*)',
-  '/:locale/sign-in(.*)',
+  '/login(.*)',
+  '/:locale/login(.*)',
   '/sign-up(.*)',
   '/:locale/sign-up(.*)',
 ]);
@@ -22,9 +22,6 @@ export default async function middleware(
   request: NextRequest,
   // event: NextFetchEvent,
 ) {
-  // Verify the request with Arcjet
-  // Use `process.env` instead of Env to reduce bundle size in middleware
-  // Run Clerk middleware only when it's necessary
   if (
     isAuthPage(request) || isProtectedRoute(request)
   ) {
