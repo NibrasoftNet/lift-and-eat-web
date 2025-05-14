@@ -34,7 +34,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container flex rtl:flex-row-reverse items-center justify-between">
-        <div className="flex rtl:flex-row-reverse items-center gap-2 w-60">
+        <div className="flex rtl:flex-row-reverse items-center w-fit">
           <Image
             src={logoImage}
             alt="Lift & Eat App"
@@ -42,7 +42,7 @@ export default function Navbar() {
             height={80}
             className="object-contain"
           />
-          <h1 className="text-xl font-bold">Lift & Eat</h1>
+          <h1 className="text-2xl font-bold">Lift & Eat</h1>
         </div>
         <div className="hidden md:flex gap-8">
           <Link href="#features" className="hover:underline underline-offset-4 transition-all easy-in-out">

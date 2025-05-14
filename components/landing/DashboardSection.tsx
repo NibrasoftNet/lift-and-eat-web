@@ -13,7 +13,7 @@ const DashboardSection = () => {
     <section
       id="dashboard"
       ref={sectionRef}
-      className="section py-20"
+      className="section"
     >
       <div className="container mx-auto">
         <div className="text-center mb-12 gsap-title">
