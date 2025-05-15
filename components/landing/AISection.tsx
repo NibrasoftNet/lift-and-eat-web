@@ -33,7 +33,7 @@ const AISection = () => {
                 <h3 className="font-semibold text-xl mb-2">
                   {t('aiSectionCardOneTitle')}
                 </h3>
-                <p className="text-gray-600">
+                <p>
                   {t('aiSectionCardOneDesc')}
                 </p>
                 </CardContent>
@@ -43,7 +43,7 @@ const AISection = () => {
                 <h3 className="font-semibold text-xl mb-2">
                   {t('aiSectionCardTwoTitle')}
                 </h3>
-                <p className="text-gray-600">
+                <p>
                   {t('aiSectionCardTwoDesc')}
                 </p>
                 </CardContent>
@@ -54,7 +54,7 @@ const AISection = () => {
                 <h3 className="font-semibold text-xl mb-2">
                   {t('aiSectionCardThreeTitle')}
                 </h3>
-                <p className="text-gray-600">
+                <p>
                   {t('aiSectionCardThreeDesc')}
                 </p>
               </CardContent>

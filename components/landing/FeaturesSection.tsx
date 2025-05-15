@@ -43,7 +43,7 @@ const FeaturesSection = () => {
                     <h3 className="font-semibold text-lg">
                       {t('featuresCardOneTitle')}
                     </h3>
-                    <p className="text-gray-600">{t('featuresCardOneDesc')}</p>
+                    <p>{t('featuresCardOneDesc')}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -55,7 +55,7 @@ const FeaturesSection = () => {
                     <h3 className="font-semibold text-lg">
                       {t('featuresCardTwoTitle')}
                     </h3>
-                    <p className="text-gray-600">{t('featuresCardTwoDesc')}</p>
+                    <p>{t('featuresCardTwoDesc')}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -67,7 +67,7 @@ const FeaturesSection = () => {
                     <h3 className="font-semibold text-lg">
                       {t('featuresCardThreeTitle')}
                     </h3>
-                    <p className="text-gray-600">{t('featuresCardThreeDesc')}</p>
+                    <p>{t('featuresCardThreeDesc')}</p>
                   </div>
                 </CardContent>
               </Card>
