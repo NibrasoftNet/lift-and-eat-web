@@ -96,8 +96,8 @@ export const createSlideInAnimation = (
         ease: "power2.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 50%",
-          end: "bottom 20%",
+          start: "top 90%",
+          end: "bottom 50%",
           toggleActions: "play none none reverse",
         },
       }
