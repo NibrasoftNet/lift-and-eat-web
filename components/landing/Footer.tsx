@@ -1,7 +1,10 @@
-import { Instagram, Mail, MessageSquare, Twitter } from "lucide-react";
 import { useTranslations } from "use-intl";
 import Image from 'next/image';
 import { logoImage } from '@/utlis/constant';
+import Link from 'next/link';
+import FacebookIcon from '@/components/icons/FacebookIcon';
+import TiktokIcon from '@/components/icons/TiktokIcon';
+import InstagramIcon from '@/components/icons/InstagramIcon';
 
 const Footer = () => {
   const t = useTranslations("Landing");
@@ -25,38 +28,34 @@ const Footer = () => {
               {t("footerDescription")}
             </p>
             <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Mail className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <MessageSquare className="h-5 w-5" />
-              </a>
+              <Link href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                <FacebookIcon svgClassName="h-10 w-10" />
+              </Link>
+              <Link href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" >
+                <TiktokIcon svgClassName="h-10 w-10" />
+              </Link>
+              <Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                <InstagramIcon svgClassName="h-10 w-10" />
+              </Link>
             </div>
           </div>
 
           <div>
             <h4 className="text-lg font-semibold mb-4">{t("footerNavigationTitle")}</h4>
             <ul className="space-y-2">
-              <li><a href="#hero" className="text-gray-400 hover:text-white transition-colors">{t("footerNavHome")}</a></li>
-              <li><a href="#features" className="text-gray-400 hover:text-white transition-colors">{t("footerNavFeatures")}</a></li>
-              <li><a href="#ai" className="text-gray-400 hover:text-white transition-colors">{t("footerNavAiPlanning")}</a></li>
-              <li><a href="#dashboard" className="text-gray-400 hover:text-white transition-colors">{t("footerNavDashboard")}</a></li>
+              <li><Link href="#hero" className="text-gray-400 hover:text-white transition-colors">{t("footerNavHome")}</Link></li>
+              <li><Link href="#features" className="text-gray-400 hover:text-white transition-colors">{t("footerNavFeatures")}</Link></li>
+              <li><Link href="#ai" className="text-gray-400 hover:text-white transition-colors">{t("footerNavAiPlanning")}</Link></li>
+              <li><Link href="#dashboard" className="text-gray-400 hover:text-white transition-colors">{t("footerNavDashboard")}</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-semibold mb-4">{t("footerLegalTitle")}</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footerPrivacyPolicy")}</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footerTermsOfService")}</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footerCookiePolicy")}</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">{t("footerContactUs")}</a></li>
+              <li><Link href="/policy" className="text-gray-400 hover:text-white transition-colors">{t("footerPrivacyPolicy")}</Link></li>
+                <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors">{t("footerTermsOfService")}</Link></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors">{t("footerContactUs")}</Link></li>
             </ul>
           </div>
         </div>

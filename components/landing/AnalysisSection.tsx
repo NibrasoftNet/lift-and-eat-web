@@ -5,7 +5,7 @@ import { analysisImage } from '@/utlis/constant';
 import Image from 'next/image';
 import { Card, CardContent } from "../ui/card";
 
-const DashboardSection = () => {
+const AnalysisSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("Landing");
 
@@ -78,4 +78,4 @@ const DashboardSection = () => {
   );
 };
 
-export default DashboardSection;
+export default AnalysisSection;

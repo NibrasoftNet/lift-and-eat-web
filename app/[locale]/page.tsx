@@ -5,7 +5,7 @@ import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import FeaturesSection from "@/components/landing/FeaturesSection";
 import AISection from "@/components/landing/AISection";
-import DashboardSection from "@/components/landing/DashboardSection";
+import AnalysisSection from "@/components/landing/AnalysisSection";
 import Footer from "@/components/landing/Footer";
 import {
   initGSAP,
@@ -23,7 +23,7 @@ const AnimatedLanding = () => {
     createParallaxEffect("hero", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("features", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("ai", ".gsap-image", ".gsap-text", "up");
-    createParallaxEffect("dashboard", ".gsap-image", ".gsap-text", "down");
+    createParallaxEffect("dashboard", ".gsap-image", ".gsap-text", "up");
 
     // Create fade-in animations
     createFadeInAnimation(".gsap-title");
@@ -42,7 +42,7 @@ const AnimatedLanding = () => {
         <HeroSection />
         <FeaturesSection />
         <AISection />
-        <DashboardSection />
+        <AnalysisSection />
       </main>
       <Footer />
     </div>

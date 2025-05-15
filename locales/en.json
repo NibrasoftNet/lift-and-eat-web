@@ -44,5 +44,77 @@
     "footerCookiePolicy": "Cookie Policy",
     "footerContactUs": "Contact Us",
     "footerRights": "All rights reserved."
+  },
+  "Terms": {
+    "title": "Terms and Conditions",
+    "intro": "By using our Nutrition Plans Creator and Tracker mobile app, you agree to the following terms and conditions.",
+    "usageTitle": "1. App Usage",
+    "usage": "The app is intended for personal use to create and monitor nutrition and meal plans. Misuse of the app is prohibited.",
+    "dataTitle": "2. Data Collection",
+    "data": "We collect data related to your nutrition preferences and usage patterns. This data is handled securely and only used to enhance your experience.",
+    "liabilityTitle": "3. Limitation of Liability",
+    "liability": "We are not responsible for any health issues resulting from misinterpretation of the plans. Consult a professional before making major dietary changes.",
+    "updatesTitle": "4. Terms Updates",
+    "updates": "We may update these terms from time to time. Continued use of the app signifies your acceptance of any changes."
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "intro": "We value your privacy and are committed to protecting your personal information when using our Nutrition Plans Creator and Tracker app.",
+    "collectionTitle": "1. Information Collection",
+    "collection": "We collect personal information such as name, age, weight, dietary preferences, and usage behavior to personalize your experience.",
+    "usageTitle": "2. Use of Information",
+    "usage": "Your information is used to tailor meal plans, track progress, and improve app features. It is never sold or shared without your consent.",
+    "protectionTitle": "3. Data Protection",
+    "protection": "We implement industry-standard security measures to protect your data from unauthorized access, misuse, or disclosure.",
+    "thirdPartyTitle": "4. Third-Party Services",
+    "thirdParty": "We may use third-party services for analytics or notifications. These providers are obligated to maintain confidentiality.",
+    "changesTitle": "5. Changes to Privacy Policy",
+    "changes": "We may update this policy occasionally. You will be notified of any major changes, and continued use of the app implies acceptance."
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "description": "We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.",
+    "officeTitle": "Our Office",
+    "address": {
+      "line1": "123 Khaled Ben Walid Street",
+      "line2": "Bodria, Mannouba 2068",
+      "country": "Tunisia"
+    },
+    "emailTitle": "Email Us",
+    "phoneTitle": "Call Us"
+  },
+  "ContactForm": {
+    "title": "Send us a message",
+    "description": "Fill out the form below and we'll respond within 24 hours.",
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Your email"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Select a subject",
+        "options": {
+          "general": "General Inquiry",
+          "support": "Technical Support",
+          "billing": "Billing Question",
+          "feedback": "Feedback",
+          "other": "Other"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Your message",
+        "helper": "Please provide as much detail as possible."
+      }
+    },
+    "button": {
+      "submit": "Send Message",
+      "loading": "Sending..."
+    }
   }
 }

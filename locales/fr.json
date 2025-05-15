@@ -44,5 +44,77 @@
     "footerCookiePolicy": "Politique de cookies",
     "footerContactUs": "Nous contacter",
     "footerRights": "Tous droits réservés."
+  },
+  "Terms": {
+    "title": "Conditions Générales d'Utilisation",
+    "intro": "En utilisant notre application mobile de création et de suivi de plans nutritionnels, vous acceptez les conditions suivantes.",
+    "usageTitle": "1. Utilisation de l'application",
+    "usage": "L'application est destinée à un usage personnel pour créer et suivre des plans nutritionnels. Toute mauvaise utilisation est interdite.",
+    "dataTitle": "2. Collecte de Données",
+    "data": "Nous collectons des données liées à vos préférences nutritionnelles et habitudes d'utilisation. Ces données sont sécurisées et utilisées uniquement pour améliorer votre expérience.",
+    "liabilityTitle": "3. Limitation de Responsabilité",
+    "liability": "Nous ne sommes pas responsables des problèmes de santé causés par une mauvaise interprétation des plans. Consultez un professionnel avant tout changement alimentaire important.",
+    "updatesTitle": "4. Mise à Jour des Conditions",
+    "updates": "Nous pouvons mettre à jour ces conditions. L'utilisation continue de l'application vaut acceptation des changements."
+  },
+  "Privacy": {
+    "title": "Politique de Confidentialité",
+    "intro": "Nous attachons une grande importance à votre vie privée et nous engageons à protéger vos informations personnelles lors de l'utilisation de notre application de création et de suivi de plans nutritionnels.",
+    "collectionTitle": "1. Collecte d'Informations",
+    "collection": "Nous collectons des informations personnelles telles que nom, âge, poids, préférences alimentaires et comportement d'utilisation pour personnaliser votre expérience.",
+    "usageTitle": "2. Utilisation des Informations",
+    "usage": "Vos informations sont utilisées pour adapter les plans alimentaires, suivre les progrès et améliorer les fonctionnalités de l'application. Elles ne sont jamais vendues ou partagées sans votre consentement.",
+    "protectionTitle": "3. Protection des Données",
+    "protection": "Nous mettons en œuvre des mesures de sécurité standards pour protéger vos données contre tout accès non autorisé, usage abusif ou divulgation.",
+    "thirdPartyTitle": "4. Services Tiers",
+    "thirdParty": "Nous pouvons utiliser des services tiers pour l'analyse ou les notifications. Ces prestataires sont tenus à la confidentialité.",
+    "changesTitle": "5. Modifications de la Politique",
+    "changes": "Nous pouvons mettre à jour cette politique. Toute modification majeure vous sera notifiée et l'utilisation continue de l'application vaut acceptation."
+  },
+  "Contact": {
+    "title": "Contactez-nous",
+    "description": "Nous serions ravis de vous entendre. Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible.",
+    "officeTitle": "Notre Bureau",
+    "address": {
+      "line1": "123 Rue Khaled Ben Walid",
+      "line2": "Bodria, Mannouba 2068",
+      "country": "Tunisie"
+    },
+    "emailTitle": "Envoyez-nous un e-mail",
+    "phoneTitle": "Appelez-nous"
+  },
+  "ContactForm": {
+    "title": "Envoyez-nous un message",
+    "description": "Remplissez le formulaire ci-dessous et nous vous répondrons dans les 24 heures.",
+    "fields": {
+      "name": {
+        "label": "Nom",
+        "placeholder": "Votre nom"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Votre email"
+      },
+      "subject": {
+        "label": "Sujet",
+        "placeholder": "Sélectionnez un sujet",
+        "options": {
+          "general": "Demande générale",
+          "support": "Support technique",
+          "billing": "Question de facturation",
+          "feedback": "Retour d'expérience",
+          "other": "Autre"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Votre message",
+        "helper": "Veuillez fournir autant de détails que possible."
+      }
+    },
+    "button": {
+      "submit": "Envoyer le message",
+      "loading": "Envoi en cours..."
+    }
   }
 }
