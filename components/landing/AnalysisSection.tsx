@@ -17,11 +17,11 @@ const AnalysisSection = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-12 gsap-title">
-          <h2 className="text-3xl md:text-5xl font-bold">
+          <h2 className="text-3xl md:text-4xl font-bold">
             {t("dashboardTitle")}
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="space-y-8 gsap-text">
             <p className="text-xl">
               {t("dashboardDesc")}
@@ -69,7 +69,7 @@ const AnalysisSection = () => {
               height={600}
               alt="Dashboard Analytics"
               unoptimized={true}
-              className="w-full h-auto rounded-lg shadow-2xl"
+              className="w-full h-auto rounded-lg shadow-xl"
             />
           </div>
         </div>

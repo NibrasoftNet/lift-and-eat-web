@@ -12,7 +12,7 @@ const AISection = () => {
     <section
       id="ai"
       ref={sectionRef}
-      className="section py-20"
+      className="section"
     >
       <div className="container mx-auto">
         <div className="text-center mb-12 gsap-title">
@@ -21,7 +21,6 @@ const AISection = () => {
             <span className="text-nutrition-blue">AI</span>
           </h2>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="space-y-6 gsap-text">
             <p className="text-lg">
@@ -61,7 +60,6 @@ const AISection = () => {
             </Card>
             </div>
           </div>
-
           <div className="gsap-image">
             <Image
               src={aiAssistantImage}
