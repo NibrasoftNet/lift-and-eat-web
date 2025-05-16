@@ -179,6 +179,8 @@
     "toast_session_expired": "انتهت الجلسة، يرجى تسجيل الدخول مرة أخرى",
     "toast_operation_success": "تمت العملية بنجاح",
     "toast_verifying_identity": "جارٍ التحقق من الهوية",
-    "toast_verifying_info": "جارٍ التحقق من معلوماتك..."
+    "toast_verifying_info": "جارٍ التحقق من معلوماتك...",
+    "delete_account": "حذف",
+    "delete_account-msg": "هل أنت متأكد؟"
   }
 }

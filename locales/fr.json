@@ -179,6 +179,8 @@
     "toast_session_expired": "Session expirée, veuillez vous reconnecter",
     "toast_operation_success": "Opération terminée avec succès",
     "toast_verifying_identity": "Vérification d'identité",
-    "toast_verifying_info": "Vérification de vos informations..."
+    "toast_verifying_info": "Vérification de vos informations...",
+    "delete_account": "Supprime",
+    "delete_account-msg": "Vous etes sure ?"
   }
 }

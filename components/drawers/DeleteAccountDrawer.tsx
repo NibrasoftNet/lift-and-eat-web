@@ -23,7 +23,7 @@ export function DeleteAccountDrawer({
     openDeleteAccountDrawer,
     setOpenDeleteAccountDrawer,
   }: DeleteAccountDrawerProp) {
-  const t = useTranslations('DrawerPage');
+  const t = useTranslations('Auth');
   //const auth = useAuth();
 
   async function onDeleteAccount() {
