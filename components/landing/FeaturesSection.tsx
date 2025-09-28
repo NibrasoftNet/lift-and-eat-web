@@ -10,23 +10,24 @@ const FeaturesSection = () => {
   const t = useTranslations('Landing');
 
   return (
-    <section
-      id="features"
-      ref={sectionRef}
-      className="section"
-    >
+    <section id="features" className="section py-8 md:py-12" ref={sectionRef}>
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1 gsap-image">
-            <Image
-              src={featuresImage}
-              width={300}
-              height={600}
-              alt="Nutrition Plans"
-              className="w-full h-auto rounded-lg shadow-2xl"
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
+          <div className="order-2 md:order-1 gsap-image max-w-[260px] md:max-w-[280px] lg:max-w-[300px] w-full justify-self-center mt-24 md:mt-28">
+            <div className="mockup-phone">
+              <div className="mockup-screen">
+                <Image
+                  src={featuresImage}
+                  width={300}
+                  height={570}
+                  alt="Nutrition Plans"
+                  sizes="(min-width: 1024px) 300px, (min-width: 768px) 280px, 260px"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
           </div>
-          <div className="space-y-8 order-1 md:order-2 gsap-text">
+          <div className="space-y-6 md:space-y-7 order-1 md:order-2 gsap-text">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 {t('featuresTitle')}

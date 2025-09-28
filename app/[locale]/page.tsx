@@ -6,6 +6,9 @@ import HeroSection from "@/components/landing/HeroSection";
 import FeaturesSection from "@/components/landing/FeaturesSection";
 import AISection from "@/components/landing/AISection";
 import AnalysisSection from "@/components/landing/AnalysisSection";
+import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import FAQSection from "@/components/landing/FAQSection";
+import ReassuranceSection from "@/components/landing/ReassuranceSection";
 import Footer from "@/components/landing/Footer";
 import {
   initGSAP,
@@ -20,7 +23,10 @@ const AnimatedLanding = () => {
     initGSAP();
 
     // Create parallax effects for each section
-    createParallaxEffect("hero", ".gsap-image", ".gsap-text", "up");
+    // Avoid animating the hero on small screens to prevent overlap with the fixed navbar
+    if (typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches) {
+      createParallaxEffect("hero", ".gsap-image", ".gsap-text", "up");
+    }
     createParallaxEffect("features", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("ai", ".gsap-image", ".gsap-text", "up");
     createParallaxEffect("dashboard", ".gsap-image", ".gsap-text", "up");
@@ -39,10 +45,15 @@ const AnimatedLanding = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
+        {/* Spacer under the fixed navbar */}
+        <div className="h-10 md:h-16 lg:h-20" aria-hidden="true" />
         <HeroSection />
         <FeaturesSection />
         <AISection />
         <AnalysisSection />
+        <HowItWorksSection />
+        <ReassuranceSection />
+        <FAQSection />
       </main>
       <Footer />
     </div>

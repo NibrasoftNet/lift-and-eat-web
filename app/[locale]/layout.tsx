@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import React from 'react';
@@ -23,6 +23,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "Lift & Eat",
     description: "Nutrition platform supported by AI",
+    icons: {
+        icon: "/favicon.ico",
+    },
+};
+
+export const viewport: Viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#F7FBF1" },
+        { media: "(prefers-color-scheme: dark)", color: "#0b0f0a" },
+    ],
 };
 
 export default async function RootLayout(props: {

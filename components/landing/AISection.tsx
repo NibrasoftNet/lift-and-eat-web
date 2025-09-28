@@ -12,7 +12,7 @@ const AISection = () => {
     <section
       id="ai"
       ref={sectionRef}
-      className="section"
+      className="section py-8 md:py-12"
     >
       <div className="container mx-auto">
         <div className="text-center mb-12 gsap-title">
@@ -21,7 +21,7 @@ const AISection = () => {
             <span className="text-nutrition-blue">AI</span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
           <div className="space-y-6 gsap-text">
             <p className="text-lg">
               {t('aiSectionDesc')}
@@ -60,15 +60,20 @@ const AISection = () => {
             </Card>
             </div>
           </div>
-          <div className="gsap-image">
-            <Image
-              src={aiAssistantImage}
-              width={300}
-              height={600}
-              alt="AI Meal Planning"
-              unoptimized={true}
-              className="w-full h-auto rounded-lg shadow-xl"
-            />
+          <div className="gsap-image max-w-[260px] md:max-w-[280px] lg:max-w-[300px] w-full justify-self-center mt-16 md:mt-20">
+            <div className="mockup-phone">
+              <div className="mockup-screen">
+                <Image
+                  src={aiAssistantImage}
+                  width={300}
+                  height={600}
+                  alt="AI Meal Planning"
+                  sizes="(min-width: 1024px) 300px, (min-width: 768px) 280px, 260px"
+                  unoptimized={true}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
