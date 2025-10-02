@@ -10,6 +10,7 @@ import { ThemeDirectionType } from "@/utlis/types/settings.type";
 import { ClientDirectionProvider } from "@/utlis/providers/client-direction-provider";
 import { ThemeProvider } from "@/utlis/providers/theme-provider";
 import { ConvexClientProvider } from "@/utlis/providers/convex-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -36,11 +37,14 @@ export const viewport: Viewport = {
     ],
 };
 
-export default async function RootLayout(props: {
+export default async function RootLayout({
+    children,
+    params,
+}: {
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
 }) {
-    const { locale } = await props.params;
+    const { locale } = await params;
     if (!routing.locales.includes(locale)) {
         notFound();
     }
@@ -58,22 +62,24 @@ export default async function RootLayout(props: {
             <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <ConvexClientProvider>
-                    <ClientDirectionProvider dir={dir}>
-                        <NextIntlClientProvider
-                            locale={locale}
-                            messages={messages}
-                        >
-                            <ThemeProvider
-                                attribute="class"
-                                enableSystem
-                                disableTransitionOnChange
+                <ClerkProvider>
+                    <ConvexClientProvider>
+                        <ClientDirectionProvider dir={dir}>
+                            <NextIntlClientProvider
+                                locale={locale}
+                                messages={messages}
                             >
-                                {props.children}
-                            </ThemeProvider>
-                        </NextIntlClientProvider>
-                    </ClientDirectionProvider>
-                </ConvexClientProvider>
+                                <ThemeProvider
+                                    attribute="class"
+                                    enableSystem
+                                    disableTransitionOnChange
+                                >
+                                    {children}
+                                </ThemeProvider>
+                            </NextIntlClientProvider>
+                        </ClientDirectionProvider>
+                    </ConvexClientProvider>
+                </ClerkProvider>
             </body>
         </html>
     );

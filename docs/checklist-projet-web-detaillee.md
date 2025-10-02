@@ -5,7 +5,7 @@
 **Objectif** : Créer une plateforme web B2B qui complète l'application mobile existante
 **Architecture** : Landing Page + Dashboard Admin + Dashboard Nutritionniste/Coach
 **Stack technique** : Next.js + Clerk + Convex (partagé avec l'app mobile)
-**État actuel** : Supabase temporaire → Migration Convex en cours
+**État actuel** : Migration Convex terminée ✅ - MVP gratuit (pas de premium)
 
 ## 📊 Stratégie d'évolution par phases
 
@@ -150,76 +150,119 @@ Le contenu existant est **PARFAIT** pour la phase bêta B2C :
 
 ---
 
-## 👑 Phase 2 : Dashboard Admin
+## 👑 Phase 2 : Dashboard Admin (Backend Convex déjà prêt ✅)
 
-### 📊 2.1 Gestion des utilisateurs
+**Architecture fournie** : Le développeur a créé toute l'infrastructure Convex
+- 📍 Convex URL : `https://fabulous-stork-993.convex.cloud`
+- 📊 Dashboard : `https://dashboard.convex.dev/d/fabulous-stork-993`
+- 🔐 Auth : Clerk configuré (`sought-humpback-85.clerk.accounts.dev`)
+- 📚 Docs complètes : `docs/admin/` (handoff, API reference, data dictionary)
 
-#### ✅ Vue d'ensemble utilisateurs
-- [ ] **Tableau de bord** : KPIs principaux (MAU, nouveaux inscrits, churn)
-- [ ] **Liste utilisateurs** : Recherche, filtres, pagination
-- [ ] **Profils détaillés** : Informations complètes + historique d'activité
-- [ ] **Segmentation** : Groupes par comportement, engagement, valeur
-- [ ] **Actions en masse** : Notifications, promotions, suspensions
+### 🎯 2.1 Pages Admin à créer (Front-end Next.js)
 
-#### ✅ Gestion des comptes premium
-- [ ] **Statuts d'abonnement** : Gratuit, Pro, Entreprise, Expiré
-- [ ] **Facturation** : Historique des paiements, relances impayés
-- [ ] **Upgrades/Downgrades** : Gestion des changements de plan
-- [ ] **Coupons/Promotions** : Création et suivi des codes promo
-- [ ] **Remboursements** : Workflow de traitement des demandes
+#### ✅ Catalogue des Assets (Public - déjà dans Convex)
+- [x] **Page Ingrédients** (`/admin/ingredients`) ✅ IMPLÉMENTÉE
+  - ✅ Liste paginée via `queries.assets.listIngredients`
+  - ✅ Recherche via `queries.assets.searchIngredients`
+  - ✅ Filtrage par tags via `queries.assets.listIngredientsByTag`
+  - ✅ Vue détail : macros/100g, i18n (FR/EN/AR), synonymes, tags
+  - ✅ Affichage `imageKey`, `source`, `sourceVersion`
 
-#### ✅ Support client intégré
-- [ ] **Tickets support** : Système de tickets avec priorités
-- [ ] **Chat en direct** : Integration Intercom/Zendesk
-- [ ] **Base de connaissances** : FAQ, guides, tutoriels
-- [ ] **Historique interactions** : Toutes les communications client
-- [ ] **Escalade** : Workflow vers équipe technique si nécessaire
+- [x] **Page Repas** (`/admin/meals`) ✅ IMPLÉMENTÉE
+  - ✅ Liste paginée via `queries.assets.listMeals`
+  - ✅ Filtrage par tags via `queries.assets.listMealsByTag`
+  - ✅ Vue détail : i18n (nom + description), composition
+  - ✅ Table composition via `queries.assets.getMealIngredientsBySlug`
+  - ✅ Affichage quantités (g) + méthode de cuisson
 
-### 📈 2.2 Analytics business
+#### ✅ Analytics & KPIs (Public - déjà dans Convex)
+- [x] **Page Analytics** (`/admin/analytics`) ✅ IMPLÉMENTÉE
+  - ✅ **DAU par jour** : `queries.analytics.dailyActiveUsers({ day })`
+  - ✅ **Événements par jour** : `queries.analytics.dailyEventCounts({ day })`
+  - ✅ **Top assets vus** : `queries.analytics.topViewedAssets({ kind, from, to })`
+  - ✅ **Latence** : `queries.analytics.latencyStats({ eventType, from, to })`
+  - ✅ **Utilisateurs actifs** : `queries.analytics.listActiveUsersForDay({ day })`
+  - ✅ Graphiques (bar/line charts) par jour/semaine
+  - ✅ Cartes KPIs avec métriques clés
 
-#### ✅ KPIs de l'application
-- [ ] **Utilisateurs actifs** : DAU, WAU, MAU avec graphiques temporels
-- [ ] **Rétention** : Cohortes, taux de rétention D1, D7, D30
-- [ ] **Engagement** : Sessions par utilisateur, durée moyenne, pages vues
-- [ ] **Conversion** : Funnel d'inscription, taux de conversion par étape
-- [ ] **Churn analysis** : Raisons de désabonnement, prédiction churn
+#### ✅ Support Utilisateur (Lecture seule - owner-only)
+- [x] **Page Support** (`/admin/support`) ✅ IMPLÉMENTÉE
+  - ✅ Recherche utilisateur par `userId` (Clerk subject)
+  - ⚠️ Afficher profil via `queries.users.getMe()` (nécessite endpoints admin)
+  - ⚠️ Lister plans via `queries.plans.list()` (nécessite endpoints admin)
+  - ⚠️ Lister entrées journalières via `queries.mealPlans.listEntriesByDay` (nécessite endpoints admin)
+  - ⚠️ Lister favoris via `queries.savedMeals.list()` (nécessite endpoints admin)
+  - ⚠️ Lister custom ingredients/meals (nécessite endpoints admin)
+  - 📝 Note: Interface créée, mais nécessite création d'endpoints admin Convex
 
-#### ✅ Analytics revenus
-- [ ] **MRR/ARR** : Revenus récurrents mensuels/annuels
-- [ ] **LTV/CAC** : Lifetime Value vs Customer Acquisition Cost
-- [ ] **Revenus par segment** : Géographie, plan, canal d'acquisition
-- [ ] **Prévisions** : Projections de revenus basées sur les tendances
-- [ ] **Cohort revenue** : Revenus par cohorte d'inscription
+#### ✅ Seed & Maintenance (Protégé par SEED_ADMIN_TOKEN)
+- [x] **Route API Seed** (`/api/admin/seed` - server-only) ✅ IMPLÉMENTÉE
+  - ✅ Upload JSON (ingredients[], meals[], mealIngredients[])
+  - ✅ Appel `actions.seedAssets.seedAssets` avec `SEED_ADMIN_TOKEN`
+  - ✅ Afficher résultat : `{ created, updated, durationMs }`
+  - ✅ Lire version actuelle via `meta.assetsDataVersion`
+  - ✅ Validation du payload avant envoi
 
-#### ✅ Analytics d'usage
-- [ ] **Fonctionnalités populaires** : Utilisation par feature
-- [ ] **Parcours utilisateur** : Flow analysis, points de friction
-- [ ] **Données nutrition** : Aliments les plus scannés, tendances
-- [ ] **Performance IA** : Précision des recommandations, feedback
-- [ ] **Géolocalisation** : Répartition géographique des utilisateurs
+### 🔒 2.2 Sécurité & Authentification
 
-### 🛠️ 2.3 Gestion du contenu
+#### ✅ Configuration Auth Clerk Admin
+- [ ] **Variables d'environnement**
+  - `NEXT_PUBLIC_CONVEX_URL=https://fabulous-stork-993.convex.cloud`
+  - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...`
+  - `CLERK_SECRET_KEY=...` (server-side)
+  - `SEED_ADMIN_TOKEN=...` (server-side uniquement, JAMAIS exposer)
 
-#### ✅ Base de données nutritionnelle
-- [ ] **CRUD aliments** : Ajout, modification, suppression d'aliments
-- [ ] **Import en masse** : CSV/Excel avec validation des données
-- [ ] **Validation qualité** : Workflow d'approbation des nouvelles entrées
-- [ ] **Traductions** : Gestion multilingue des noms d'aliments
-- [ ] **Sources** : Références nutritionnelles (USDA, ANSES, etc.)
+- [ ] **Protection des pages Admin**
+  - Middleware Clerk pour `/admin/*`
+  - Liste emails admin en env : `ADMIN_EMAILS=...`
+  - Vérification rôle admin via JWT Clerk
 
-#### ✅ Gestion des recettes
-- [ ] **Bibliothèque recettes** : CRUD avec catégorisation
-- [ ] **Calculs automatiques** : Macros/micros basés sur les ingrédients
-- [ ] **Photos/vidéos** : Gestion des médias avec compression
-- [ ] **Validation nutritionniste** : Workflow d'approbation
-- [ ] **Popularité** : Statistiques d'utilisation des recettes
+- [ ] **Sécurité Seed**
+  - Route `/api/admin/seed` server-side uniquement
+  - `SEED_ADMIN_TOKEN` jamais en `NEXT_PUBLIC_*`
+  - Vérifier email admin avant d'appeler l'action
 
-#### ✅ Modération et qualité
-- [ ] **Signalements** : Gestion des contenus signalés par les utilisateurs
-- [ ] **Modération automatique** : IA pour détecter contenus inappropriés
-- [ ] **Workflow validation** : Processus d'approbation multi-niveaux
-- [ ] **Audit trail** : Historique de toutes les modifications
-- [ ] **Blacklist/Whitelist** : Gestion des contenus autorisés/interdits
+### 📊 2.3 Analytics & Données disponibles (Convex)
+
+#### ✅ Tables Convex existantes
+- [x] **ingredients** : slug, nameI18n{fr,en,ar}, macrosPer100g, tags, imageKey
+- [x] **meals** : slug, nameI18n, descriptionI18n, tags, imageKey
+- [x] **meal_ingredients** : composition (mealSlug, ingredientSlug, quantityGr)
+- [x] **events** : analytics (eventType, ts, userId, anonymousId, payload)
+- [x] **users** : profils (userId, preferences, locale, platform)
+- [x] **plans** : plans nutritionnels (goal, macros, startDate, current)
+- [x] **plan_entries** : entrées journalières (day, slot, kind, refType, quantity)
+- [x] **saved_meals** : favoris utilisateurs
+- [x] **custom_ingredients** : ingrédients personnalisés par user
+- [x] **custom_meals** : repas personnalisés par user
+- [x] **waitlist_entries** : inscriptions web
+- [x] **meta** : metadata (assetsDataVersion)
+
+#### ✅ Endpoints Convex disponibles (voir docs/admin/api-reference.md)
+- [x] Assets : `queries.assets.*` (listIngredients, listMeals, search, etc.)
+- [x] Analytics : `queries.analytics.*` (DAU, events, topAssets, latency)
+- [x] Users : `queries.users.*` (getMe, preferences - owner-only)
+- [x] Plans : `queries.plans.*` (list, getCurrent, getDetails - owner-only)
+- [x] Seed : `actions.seedAssets.seedAssets` (protégé SEED_ADMIN_TOKEN)
+
+### 🎨 2.4 Interface Admin recommandée
+
+#### ✅ Layout & Navigation
+- [ ] **Sidebar Admin**
+  - Dashboard (vue d'ensemble)
+  - Catalogue → Ingrédients, Repas
+  - Analytics → KPIs, Événements, Top Assets
+  - Support → Utilisateurs
+  - Maintenance → Seed Assets
+  - Paramètres
+
+- [ ] **Composants UI**
+  - Tables avec pagination, tri, recherche
+  - Graphiques (recharts ou chart.js)
+  - Cartes KPIs avec métriques
+  - Formulaires de filtrage
+  - Upload JSON pour seed
+  - i18n switcher (FR/EN/AR) pour preview assets
 
 ---
 

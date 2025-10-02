@@ -13,6 +13,11 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as actions from "../actions.js";
+import type * as admin from "../admin.js";
+import type * as analytics from "../analytics.js";
+import type * as assets from "../assets.js";
+import type * as internal_ from "../internal.js";
 import type * as waitlist from "../waitlist.js";
 
 /**
@@ -24,6 +29,11 @@ import type * as waitlist from "../waitlist.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  actions: typeof actions;
+  admin: typeof admin;
+  analytics: typeof analytics;
+  assets: typeof assets;
+  internal: typeof internal_;
   waitlist: typeof waitlist;
 }>;
 export declare const api: FilterApi<

@@ -53,7 +53,7 @@ export const getWaitlistEntries = query({
     
     return await ctx.db
       .query("waitlist_entries")
-      .withIndex("by_created_at")
+      .withIndex("by_created_at", (q) => q)
       .order("desc")
       .take(limit);
   },
