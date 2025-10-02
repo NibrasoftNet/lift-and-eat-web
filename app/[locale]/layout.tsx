@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation';
 import { ThemeDirectionType } from "@/utlis/types/settings.type";
 import { ClientDirectionProvider } from "@/utlis/providers/client-direction-provider";
 import { ThemeProvider } from "@/utlis/providers/theme-provider";
+import { ConvexClientProvider } from "@/utlis/providers/convex-provider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -57,20 +58,22 @@ export default async function RootLayout(props: {
             <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <ClientDirectionProvider dir={dir}>
-                    <NextIntlClientProvider
-                        locale={locale}
-                        messages={messages}
-                    >
-                        <ThemeProvider
-                            attribute="class"
-                            enableSystem
-                            disableTransitionOnChange
+                <ConvexClientProvider>
+                    <ClientDirectionProvider dir={dir}>
+                        <NextIntlClientProvider
+                            locale={locale}
+                            messages={messages}
                         >
-                            {props.children}
-                        </ThemeProvider>
-                    </NextIntlClientProvider>
-                </ClientDirectionProvider>
+                            <ThemeProvider
+                                attribute="class"
+                                enableSystem
+                                disableTransitionOnChange
+                            >
+                                {props.children}
+                            </ThemeProvider>
+                        </NextIntlClientProvider>
+                    </ClientDirectionProvider>
+                </ConvexClientProvider>
             </body>
         </html>
     );

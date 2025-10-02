@@ -5,6 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useLocale, useTranslations } from "use-intl";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -29,6 +31,7 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
   const locale = useLocale();
   const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = React.useState<string>("");
+  const registerToWaitlist = useMutation(api.waitlist.registerToWaitlist);
 
   const form = useForm<WaitlistFormValues>({
     resolver: zodResolver(schema),
@@ -47,15 +50,16 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
     }
 
     try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: values.email, locale, source }),
+      const result = await registerToWaitlist({
+        email: values.email,
+        locale,
+        source,
+        ip_address: undefined, // Client-side doesn't have access to IP
+        user_agent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
       });
 
-      const data = await res.json().catch(() => ({ ok: false }));
-      if (!res.ok || !data?.ok) {
-        throw new Error(data?.message || "Request failed");
+      if (!result.success) {
+        throw new Error(result.error || "Registration failed");
       }
 
       setStatus("success");
@@ -66,15 +70,15 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
       if (typeof window !== 'undefined') {
         try {
           // Plausible
-          // @ts-ignore
+          // @ts-expect-error - Plausible global not typed
           if (window.plausible) {
-            // @ts-ignore
+            // @ts-expect-error - Plausible global not typed
             window.plausible('waitlist_signup', { props: { locale, source } });
           }
           // GTM / dataLayer
-          // @ts-ignore
+          // @ts-expect-error - GTM dataLayer global not typed
           window.dataLayer = window.dataLayer || [];
-          // @ts-ignore
+          // @ts-expect-error - GTM dataLayer global not typed
           window.dataLayer.push({
             event: 'waitlist_signup',
             locale,
@@ -82,9 +86,9 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
           });
         } catch {}
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       setStatus("error");
-      setMessage(dataMessage(e?.message) || t("error"));
+      setMessage(dataMessage((e as Error)?.message) || t("error"));
     }
   }
 
