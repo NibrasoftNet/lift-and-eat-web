@@ -1,4 +1,6 @@
-// Schema synchronisé avec l'app mobile pour lecture des données partagées
+// convex/schema.ts
+// Schéma minimal Convex pour les assets (ingredients/meals), events (KPIs) et users (owner-only)
+
 import { defineSchema, defineTable } from 'convex/server';
 import { v } from 'convex/values';
 
@@ -28,9 +30,9 @@ export default defineSchema({
     sourceVersion: v.number(),
     createdAt: v.number(), // timestamp ms
   })
-    .index('by_slug', ['slug'])
-    .index('by_nameNormalized', ['nameNormalized'])
-    .searchIndex('search_name', { searchField: 'nameNormalized' }),
+    .index('by_slug', ['slug']) // unicité logique à gérer côté code
+    .index('by_nameNormalized', ['nameNormalized']) // lookup rapide par nom normalisé
+    .searchIndex('search_name', { searchField: 'nameNormalized' }), // search FR/diacritiques
 
   meals: defineTable({
     slug: v.string(),
@@ -132,6 +134,18 @@ export default defineSchema({
     .index('by_plan', ['planId'])
     .index('by_plan_date', ['planId', 'date']),
 
+  // Web-only: waitlist entries for landing page
+  waitlist_entries: defineTable({
+    email: v.string(),
+    locale: v.optional(v.string()),
+    source: v.optional(v.string()),
+    ip_address: v.optional(v.string()),
+    user_agent: v.optional(v.string()),
+    created_at: v.string(),
+  })
+    .index("by_email", ["email"])
+    .index("by_created_at", ["created_at"]),
+
   // Owner-only daily plan entries (meals & ingredients)
   plan_entries: defineTable({
     userId: v.string(), // owner (Clerk subject)
@@ -221,16 +235,4 @@ export default defineSchema({
   })
     .index('by_user_clientId', ['userId', 'clientId'])
     .index('by_user', ['userId']),
-
-  // Web-only: waitlist entries for landing page
-  waitlist_entries: defineTable({
-    email: v.string(),
-    locale: v.string(),
-    source: v.string(),
-    ip_address: v.optional(v.string()),
-    user_agent: v.optional(v.string()),
-    created_at: v.string(), // ISO string
-  })
-    .index('by_email', ['email'])
-    .index('by_created_at', ['created_at']),
 });

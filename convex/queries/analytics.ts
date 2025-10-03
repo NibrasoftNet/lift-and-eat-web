@@ -97,24 +97,32 @@ export const listActiveUsersForRange = query({
     const events = await ctx.db.query("events").collect();
 
     // Group identities per day
-    const perDay = new Map<string, Map<string, { userId?: string; anonymousId?: string }>>();
+    const perDay = new Map<string, Map<string, { userId?: string; anonymousId?: string; lastOpenAt: number }>>();
     for (const ev of events) {
       if (ev.eventType !== "app_open") continue;
-      const evDay = (ev as any)?.payload?.day as string | undefined;
-      if (!evDay || !inRange(evDay)) continue;
+      const payload = (ev as any)?.payload ?? {};
+      const evDayFromTs = new Date(ev.ts).toISOString().slice(0, 10);
+      const evDay = (payload.day as string | undefined) ?? evDayFromTs;
+      if (!inRange(evDay)) continue;
       const key = (ev.userId ?? ev.anonymousId) as string | undefined;
       if (!key) continue;
       if (!perDay.has(evDay)) perDay.set(evDay, new Map());
       const bucket = perDay.get(evDay)!;
-      if (!bucket.has(key)) bucket.set(key, { userId: ev.userId ?? undefined, anonymousId: ev.userId ? undefined : ev.anonymousId });
+      const lastTs = Number(payload.clientTs ?? ev.ts);
+      if (!bucket.has(key)) {
+        bucket.set(key, { userId: ev.userId ?? undefined, anonymousId: ev.userId ? undefined : ev.anonymousId, lastOpenAt: lastTs });
+      } else {
+        const prev = bucket.get(key)!;
+        if (lastTs > prev.lastOpenAt) prev.lastOpenAt = lastTs;
+      }
     }
 
     // Enrich with optional user docs and build results
     const days = Array.from(perDay.keys()).sort();
-    const results: Array<{ day: string; dau: number; items: Array<{ id: string; userId?: string; anonymousId?: string; user?: any }> }> = [];
+    const results: Array<{ day: string; dau: number; items: Array<{ id: string; userId?: string; anonymousId?: string; user?: any; lastOpenAt?: number }> }> = [];
     for (const day of days) {
       const bucket = perDay.get(day)!;
-      const items: Array<{ id: string; userId?: string; anonymousId?: string; user?: any }> = [];
+      const items: Array<{ id: string; userId?: string; anonymousId?: string; user?: any; lastOpenAt?: number }> = [];
       for (const [id, info] of bucket.entries()) {
         let userDoc: any = null;
         if (info.userId) {
@@ -124,7 +132,7 @@ export const listActiveUsersForRange = query({
             .collect();
           userDoc = rows[0] ?? null;
         }
-        items.push({ id, ...info, user: userDoc });
+        items.push({ id, user: userDoc, userId: info.userId, anonymousId: info.anonymousId, lastOpenAt: info.lastOpenAt });
       }
       results.push({ day, dau: items.length, items });
     }
@@ -139,18 +147,27 @@ export const listActiveUsersForRange = query({
 export const listActiveUsersForDay = query({
   args: { day: v.string() },
   handler: async (ctx, { day }) => {
-    const map = new Map<string, { userId?: string; anonymousId?: string }>();
+    const { startMs, endMs } = dayRangeUtc(day);
+    const map = new Map<string, { userId?: string; anonymousId?: string; lastOpenAt: number }>();
     const events = await ctx.db.query("events").collect();
     for (const ev of events) {
       if (ev.eventType !== "app_open") continue;
-      const evDay = (ev as any)?.payload?.day as string | undefined;
-      if (evDay !== day) continue;
+      const payload = (ev as any)?.payload ?? {};
+      const evDay = payload.day as string | undefined;
+      const inDay = evDay ? evDay === day : ev.ts >= startMs && ev.ts <= endMs;
+      if (!inDay) continue;
       const key = (ev.userId ?? ev.anonymousId) as string | undefined;
       if (!key) continue;
-      if (!map.has(key)) map.set(key, { userId: ev.userId ?? undefined, anonymousId: ev.userId ? undefined : ev.anonymousId });
+      const ts = Number(payload.clientTs ?? ev.ts);
+      if (!map.has(key)) {
+        map.set(key, { userId: ev.userId ?? undefined, anonymousId: ev.userId ? undefined : ev.anonymousId, lastOpenAt: ts });
+      } else {
+        const prev = map.get(key)!;
+        if (ts > prev.lastOpenAt) prev.lastOpenAt = ts;
+      }
     }
 
-    const results: Array<{ id: string; userId?: string; anonymousId?: string; user?: any }> = [];
+    const results: Array<{ id: string; userId?: string; anonymousId?: string; user?: any; lastOpenAt?: number }> = [];
     for (const [id, info] of map.entries()) {
       let userDoc: any = null;
       if (info.userId) {
@@ -160,7 +177,7 @@ export const listActiveUsersForDay = query({
           .collect();
         userDoc = rows[0] ?? null;
       }
-      results.push({ id, ...info, user: userDoc });
+      results.push({ id, user: userDoc, userId: info.userId, anonymousId: info.anonymousId, lastOpenAt: info.lastOpenAt });
     }
     return { day, total: results.length, items: results } as const;
   },

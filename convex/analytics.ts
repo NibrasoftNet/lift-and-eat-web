@@ -1,221 +1,224 @@
+// convex/analytics.ts
 import { query } from "./_generated/server";
 import { v } from "convex/values";
 
-// Query pour les utilisateurs actifs quotidiens
+// Utility: UTC range for a YYYY-MM-DD day
+function dayRangeUtc(day: string): { startMs: number; endMs: number } {
+  const start = Date.parse(`${day}T00:00:00Z`);
+  const end = Date.parse(`${day}T23:59:59.999Z`);
+  return { startMs: start, endMs: end };
+}
+
+// Return count of distinct users who opened the app on a given day (YYYY-MM-DD)
+// Uses events documents written by mutations/events.trackEvent with eventType='app_open'
 export const dailyActiveUsers = query({
-  args: { day: v.string() }, // Format YYYY-MM-DD
-  handler: async (ctx, args) => {
-    const startOfDay = new Date(args.day + "T00:00:00.000Z").getTime();
-    const endOfDay = new Date(args.day + "T23:59:59.999Z").getTime();
-
+  args: { day: v.string() },
+  handler: async (ctx, { day }) => {
+    const seen = new Set<string>();
+    const { startMs, endMs } = dayRangeUtc(day);
+    // Prefer index if available; fallback to full scan if not
     const events = await ctx.db
       .query("events")
-      .filter((q) => 
-        q.and(
-          q.neq(q.field("userId"), null),
-          q.gte(q.field("ts"), startOfDay),
-          q.lte(q.field("ts"), endOfDay)
-        )
-      )
+      .withIndex("by_type_ts", (q) => q.eq("eventType", "app_open"))
       .collect();
 
-    const uniqueUsers = new Set(events.map(e => e.userId).filter(Boolean));
-
-    return {
-      dau: uniqueUsers.size,
-      day: args.day,
-    };
+    for (const ev of events) {
+      if (ev.eventType !== "app_open") continue;
+      const evDay = (ev as any)?.payload?.day as string | undefined;
+      // Use payload.day when present, otherwise fallback to timestamp window
+      const inDay = evDay ? evDay === day : ev.ts >= startMs && ev.ts <= endMs;
+      if (!inDay) continue;
+      const id = ev.userId ?? ev.anonymousId; // Prefer Clerk subject if present, fallback to tokenIdentifier
+      if (id) seen.add(id);
+    }
+    return { day, dau: seen.size } as const;
   },
 });
 
-// Query pour les événements quotidiens (utilise table events existante)
+// Aggregate counts per eventType for a given day
 export const dailyEventCounts = query({
-  args: { day: v.string() }, // Format YYYY-MM-DD
-  handler: async (ctx, args) => {
-    const startOfDay = new Date(args.day + "T00:00:00.000Z").getTime();
-    const endOfDay = new Date(args.day + "T23:59:59.999Z").getTime();
-
-    const events = await ctx.db
-      .query("events")
-      .filter((q) => 
-        q.and(
-          q.gte(q.field("ts"), startOfDay),
-          q.lte(q.field("ts"), endOfDay)
-        )
-      )
-      .collect();
-
-    // Grouper par type d'événement
-    const eventCounts: Record<string, number> = {};
-    events.forEach(event => {
-      eventCounts[event.eventType] = (eventCounts[event.eventType] || 0) + 1;
-    });
-
-    const items = Object.entries(eventCounts).map(([eventType, count]) => ({
-      eventType,
-      count,
-    }));
-
-    return {
-      items,
-      day: args.day,
-    };
+  args: { day: v.string() },
+  handler: async (ctx, { day }) => {
+    const { startMs, endMs } = dayRangeUtc(day);
+    const counts: Record<string, number> = {};
+    const events = await ctx.db.query("events").collect();
+    for (const ev of events) {
+      const evDay = (ev as any)?.payload?.day as string | undefined;
+      const inDay = evDay ? evDay === day : ev.ts >= startMs && ev.ts <= endMs;
+      if (!inDay) continue;
+      counts[ev.eventType] = (counts[ev.eventType] ?? 0) + 1;
+    }
+    const items = Object.entries(counts)
+      .map(([eventType, count]) => ({ eventType, count }))
+      .sort((a, b) => b.count - a.count);
+    return { day, items } as const;
   },
 });
 
-// Query pour les assets les plus vus (basé sur les événements réels)
+// Top-N most viewed assets (by slug) for a kind over a date range (inclusive)
 export const topViewedAssets = query({
   args: {
-    kind: v.union(v.literal("ingredient"), v.literal("meal")),
-    from: v.string(), // Format YYYY-MM-DD
-    to: v.string(),   // Format YYYY-MM-DD
-    limit: v.number(),
+    kind: v.union(v.literal('ingredient'), v.literal('meal')), // narrowed to match frontend type
+    from: v.string(),
+    to: v.string(),
+    limit: v.optional(v.number()),
   },
-  handler: async (ctx, args) => {
-    const startTime = new Date(args.from + "T00:00:00.000Z").getTime();
-    const endTime = new Date(args.to + "T23:59:59.999Z").getTime();
-
-    // Utiliser les événements existants pour simuler les vues
-    const events = await ctx.db
-      .query("events")
-      .filter((q) => 
-        q.and(
-          q.gte(q.field("ts"), startTime),
-          q.lte(q.field("ts"), endTime)
-        )
-      )
-      .collect();
-
-    // Simuler des vues d'assets basées sur les événements
-    const viewCounts: Record<string, number> = {};
-    
-    // Pour les ingrédients, utiliser les événements add_to_meal
-    if (args.kind === "ingredient") {
-      const ingredients = await ctx.db.query("ingredients").collect();
-      ingredients.slice(0, args.limit).forEach((ingredient, index) => {
-        viewCounts[ingredient.slug] = Math.max(1, events.length - index * 2);
-      });
-    } else {
-      // Pour les repas, utiliser une logique similaire
-      const meals = await ctx.db.query("meals").collect();
-      meals.slice(0, args.limit).forEach((meal, index) => {
-        viewCounts[meal.slug] = Math.max(1, events.length - index * 3);
-      });
+  handler: async (ctx, { kind, from, to, limit = 10 }) => {
+    const startMs = Date.parse(`${from}T00:00:00Z`);
+    const endMs = Date.parse(`${to}T23:59:59.999Z`);
+    const tally = new Map<string, number>();
+    const events = await ctx.db.query("events").collect();
+    for (const ev of events) {
+      if (ev.eventType !== "asset_view") continue;
+      if (ev.ts < startMs || ev.ts > endMs) continue;
+      const payload = (ev as any)?.payload ?? {};
+      if (payload.kind !== kind) continue;
+      const slug = payload.slug as string | undefined;
+      if (!slug) continue;
+      tally.set(slug, (tally.get(slug) ?? 0) + 1);
     }
-
-    // Trier et limiter (adapter la forme pour l'UI: { slug, count })
-    const sortedAssets = Object.entries(viewCounts)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, args.limit)
-      .map(([slug, count]) => ({ slug, count }));
-
-    return {
-      items: sortedAssets,
-      kind: args.kind,
-      from: args.from,
-      to: args.to,
-    };
+    const items = Array.from(tally.entries())
+      .map(([slug, count]) => ({ slug, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, limit);
+    return { kind, from, to, items } as const;
   },
 });
 
-// Query pour les statistiques de latence (simulées basées sur les événements réels)
-export const latencyStats = query({
-  args: {
-    eventType: v.string(),
-    from: v.string(), // Format YYYY-MM-DD
-    to: v.string(),   // Format YYYY-MM-DD
-  },
-  handler: async (ctx, args) => {
-    const startTime = new Date(args.from + "T00:00:00.000Z").getTime();
-    const endTime = new Date(args.to + "T23:59:59.999Z").getTime();
+// Aggregate active users per day over an inclusive date range (YYYY-MM-DD)
+// Returns an array sorted by day ascending: [{ day, dau, items: [...] }]
+export const listActiveUsersForRange = query({
+  args: { from: v.string(), to: v.string() },
+  handler: async (ctx, { from, to }) => {
+    // Helper to check if day lies within [from, to]
+    const inRange = (d: string) => d >= from && d <= to;
 
-    const events = await ctx.db
-      .query("events")
-      .filter((q) => 
-        q.and(
-          q.eq(q.field("eventType"), args.eventType),
-          q.gte(q.field("ts"), startTime),
-          q.lte(q.field("ts"), endTime)
-        )
-      )
-      .collect();
+    // Collect app_open events once
+    const events = await ctx.db.query("events").collect();
 
-    if (events.length === 0) {
-      return null;
-    }
-
-    // Simuler des latences réalistes (50-200ms)
-    const latencies = events
-      .map(() => Math.floor(Math.random() * 150) + 50)
-      .sort((a, b) => a - b);
-
-    const avg = latencies.reduce((sum, lat) => sum + lat, 0) / latencies.length;
-    const p50 = latencies[Math.floor(latencies.length * 0.5)];
-    const p90 = latencies[Math.floor(latencies.length * 0.9)];
-    const p95 = latencies[Math.floor(latencies.length * 0.95)];
-    const p99 = latencies[Math.floor(latencies.length * 0.99)];
-
-    return {
-      eventType: args.eventType,
-      from: args.from,
-      to: args.to,
-      count: latencies.length,
-      avg: Math.round(avg * 100) / 100,
-      p50,
-      p90,
-      p95,
-      p99,
-      min: latencies[0],
-      max: latencies[latencies.length - 1],
-    };
-  },
-});
-
-// Query pour lister les utilisateurs actifs d'une journée (basé sur les événements réels)
-export const listActiveUsersForDay = query({
-  args: { day: v.string() }, // Format YYYY-MM-DD
-  handler: async (ctx, args) => {
-    const startOfDay = new Date(args.day + "T00:00:00.000Z").getTime();
-    const endOfDay = new Date(args.day + "T23:59:59.999Z").getTime();
-
-    const events = await ctx.db
-      .query("events")
-      .filter((q) => 
-        q.and(
-          q.or(
-            q.neq(q.field("userId"), null),
-            q.neq(q.field("anonymousId"), null)
-          ),
-          q.gte(q.field("ts"), startOfDay),
-          q.lte(q.field("ts"), endOfDay)
-        )
-      )
-      .collect();
-
-    // Grouper par utilisateur (authentifié ou anonyme) et garder la dernière activité
-    type ActiveUser = { id: string; userId?: string; anonymousId?: string; lastActivity: number };
-    const userMap = new Map<string, ActiveUser>();
-    events.forEach(event => {
-      const key = (event.userId || event.anonymousId) as string | undefined;
-      if (!key) return;
-      const existing = userMap.get(key);
-      if (!existing || event.ts > existing.lastActivity) {
-        userMap.set(key, {
-          id: key,
-          userId: event.userId || undefined,
-          anonymousId: event.anonymousId || undefined,
-          lastActivity: event.ts,
-        });
+    // Group identities per day
+    const perDay = new Map<string, Map<string, { userId?: string; anonymousId?: string; lastOpenAt: number }>>();
+    for (const ev of events) {
+      if (ev.eventType !== "app_open") continue;
+      const payload = (ev as any)?.payload ?? {};
+      const evDayFromTs = new Date(ev.ts).toISOString().slice(0, 10);
+      const evDay = (payload.day as string | undefined) ?? evDayFromTs;
+      if (!inRange(evDay)) continue;
+      const key = (ev.userId ?? ev.anonymousId) as string | undefined;
+      if (!key) continue;
+      if (!perDay.has(evDay)) perDay.set(evDay, new Map());
+      const bucket = perDay.get(evDay)!;
+      const lastTs = Number(payload.clientTs ?? ev.ts);
+      if (!bucket.has(key)) {
+        bucket.set(key, { userId: ev.userId ?? undefined, anonymousId: ev.userId ? undefined : ev.anonymousId, lastOpenAt: lastTs });
+      } else {
+        const prev = bucket.get(key)!;
+        if (lastTs > prev.lastOpenAt) prev.lastOpenAt = lastTs;
       }
-    });
+    }
 
-    const items = Array.from(userMap.values())
-      .sort((a, b) => b.lastActivity - a.lastActivity);
+    // Enrich with optional user docs and build results
+    const days = Array.from(perDay.keys()).sort();
+    const results: Array<{ day: string; dau: number; items: Array<{ id: string; userId?: string; anonymousId?: string; user?: any; lastOpenAt?: number }> }> = [];
+    for (const day of days) {
+      const bucket = perDay.get(day)!;
+      const items: Array<{ id: string; userId?: string; anonymousId?: string; user?: any; lastOpenAt?: number }> = [];
+      for (const [id, info] of bucket.entries()) {
+        let userDoc: any = null;
+        if (info.userId) {
+          const rows = await ctx.db
+            .query("users")
+            .withIndex("by_userId", (q) => q.eq("userId", info.userId!))
+            .collect();
+          userDoc = rows[0] ?? null;
+        }
+        items.push({ id, user: userDoc, userId: info.userId, anonymousId: info.anonymousId, lastOpenAt: info.lastOpenAt });
+      }
+      results.push({ day, dau: items.length, items });
+    }
 
+    // Ensure empty days in range appear if needed (optional): skip for now for simplicity
+    return { from, to, days: results } as const;
+  },
+});
+
+// Return distinct identities (userId or anonymousId) that opened the app on a given day
+// Optionally joins with the 'users' table via by_userId index to enrich with profile data
+export const listActiveUsersForDay = query({
+  args: { day: v.string() },
+  handler: async (ctx, { day }) => {
+    const { startMs, endMs } = dayRangeUtc(day);
+    const map = new Map<string, { userId?: string; anonymousId?: string; lastOpenAt: number }>();
+    const events = await ctx.db.query("events").collect();
+    for (const ev of events) {
+      if (ev.eventType !== "app_open") continue;
+      const payload = (ev as any)?.payload ?? {};
+      const evDay = payload.day as string | undefined;
+      const inDay = evDay ? evDay === day : ev.ts >= startMs && ev.ts <= endMs;
+      if (!inDay) continue;
+      const key = (ev.userId ?? ev.anonymousId) as string | undefined;
+      if (!key) continue;
+      const ts = Number(payload.clientTs ?? ev.ts);
+      if (!map.has(key)) {
+        map.set(key, { userId: ev.userId ?? undefined, anonymousId: ev.userId ? undefined : ev.anonymousId, lastOpenAt: ts });
+      } else {
+        const prev = map.get(key)!;
+        if (ts > prev.lastOpenAt) prev.lastOpenAt = ts;
+      }
+    }
+
+    const results: Array<{ id: string; userId?: string; anonymousId?: string; user?: any; lastOpenAt?: number }> = [];
+    for (const [id, info] of map.entries()) {
+      let userDoc: any = null;
+      if (info.userId) {
+        const rows = await ctx.db
+          .query("users")
+          .withIndex("by_userId", (q) => q.eq("userId", info.userId!))
+          .collect();
+        userDoc = rows[0] ?? null;
+      }
+      results.push({ id, user: userDoc, userId: info.userId, anonymousId: info.anonymousId, lastOpenAt: info.lastOpenAt });
+    }
+    return { day, total: results.length, items: results } as const;
+  },
+});
+
+// Latency stats for a given eventType in a date range: uses (server ts - client payload.clientTs)
+export const latencyStats = query({
+  args: { eventType: v.string(), from: v.string(), to: v.string() },
+  handler: async (ctx, { eventType, from, to }) => {
+    const startMs = Date.parse(`${from}T00:00:00Z`);
+    const endMs = Date.parse(`${to}T23:59:59.999Z`);
+    const durations: number[] = [];
+    const events = await ctx.db.query("events").collect();
+    for (const ev of events) {
+      if (ev.eventType !== eventType) continue;
+      if (ev.ts < startMs || ev.ts > endMs) continue;
+      const clientTs = Number((ev as any)?.payload?.clientTs ?? NaN);
+      if (!Number.isFinite(clientTs)) continue;
+      const d = Math.max(0, ev.ts - clientTs);
+      durations.push(d);
+    }
+    if (durations.length === 0) {
+      return { eventType, from, to, count: 0, p50: 0, p95: 0, p99: 0, avg: 0, min: 0, max: 0 } as const;
+    }
+    durations.sort((a, b) => a - b);
+    const q = (p: number) => durations[Math.min(durations.length - 1, Math.floor((p / 100) * durations.length))];
+    const sum = durations.reduce((acc, x) => acc + x, 0);
+    const avg = sum / durations.length;
+    const min = durations[0];
+    const max = durations[durations.length - 1];
     return {
-      items,
-      total: items.length,
-      day: args.day,
-    };
+      eventType,
+      from,
+      to,
+      count: durations.length,
+      p50: q(50),
+      p95: q(95),
+      p99: q(99),
+      avg,
+      min,
+      max,
+    } as const;
   },
 });

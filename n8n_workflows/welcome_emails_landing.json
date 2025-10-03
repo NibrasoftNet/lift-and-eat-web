@@ -1,0 +1,231 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "e94bb213-683a-4114-88b1-0f043987fb8d",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -1200,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// On récupère les données de l'utilisateur qui arrivent\nconst user = $input.item.json;\n\n// On prépare le contenu HTML de l'e-mail\n// L'utilisation des backticks (`) préserve parfaitement le formatage\nuser.emailHtml = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Bienvenue sur Lift Eat Mobile</title>\n  <style>\n    body { font-family: 'Roboto', Arial, sans-serif; background: #F8FCF6; margin: 0; padding: 0; color: #3d4e35; }\n    .container { max-width: 640px; margin: auto; background: #fff; border-radius: 20px; box-shadow: 0 2px 10px #e5efdc; overflow: hidden; }\n    h1, h2, h3 { font-family: 'Roboto', Arial, sans-serif; color: #7cae27; margin-top: 0; margin-bottom: 16px; }\n    h2 { font-size: 19px }\n    .section { padding: 22px 28px; border-bottom: 1px solid #e5efdc; }\n    .images-row { display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin: 18px 0 0 0; }\n    .images-row img { border-radius: 14px; box-shadow: 0 1px 8px #aee04d2c; width: 150px; height: auto; object-fit: cover; background: #fafafa; border: 2px solid #e8f3c3; }\n    .button { display: inline-block; background: #7cae27; color: #fff; font-weight: 700; padding: 12px 32px; border-radius: 24px; text-decoration: none; margin-top: 22px; font-size: 18px; box-shadow: 0 2px 8px #7cae2720; letter-spacing: 0.8px; }\n    .footer { background: #f8fcf6; color: #808c6c; padding: 18px; font-size: 14px; text-align: center; }\n  </style>\n</head>\n<body>\n<div class=\"container\">\n  <div class=\"section\" style=\"background: #eaf8d9;\">\n    <h1>Bienvenue dans l'aventure Lift Eat Mobile 🚀</h1>\n    <p>Merci pour ton inscription !<br>\n    Tu deviens membre privilégié de la phase testeurs de notre application nutrition & bien-être 100% tunisienne !</p>\n  </div>\n  <div class=\"section\">\n    <h2>Ce que tu vas découvrir :</h2>\n    <ul>\n      <li><b>🏠 Accueil & dashboard personnalisé</b> – Un suivi clair de tes calories, pas, poids, eau et IMC chaque jour.</li>\n      <li><b>👤 Profil sur mesure</b> – Paramètre tes objectifs et préférences pour des recommandations uniques.</li>\n      <li><b>🍽️ Création de repas intelligente</b> – Ajoute des ingrédients, scanne tes plats et découvre tes valeurs nutritionnelles.</li>\n      <li><b>🤖 Assistant nutrition IA</b> – Pose tes questions pour recevoir des conseils personnalisés.</li>\n      <li><b>📈 Trackers innovants</b> – Suivi détaillé en temps réel pour chaque indicateur.</li>\n      <li><b>🔎 Détail repas & recettes</b> – Explore chaque plat avec ses ingrédients, instructions, calories, macros...</li>\n    </ul>\n  </div>\n\n  <div class=\"section\">\n    <p>Chez Lift Eat, nous avons conçu une application pour te simplifier la vie et t'aider à atteindre tes objectifs de santé, en respectant nos saveurs tunisiennes ! Fini les applications génériques qui ne comprennent pas nos habitudes. Avec Lift Eat, tu as un coach nutritionnel intelligent directement dans ta poche.</p>\n    <p>Prêt à découvrir comment Lift Eat va transformer ta façon de manger ? Voici un aperçu de ce qui t'attend :</p>\n    <h2>Aperçu de l’application :</h2>\n    <div class=\"images-row\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519353/plan_details_iuicrx.png\" alt=\"Accueil\">\n    </div>\n    <br>\n    <h3>Profil utilisateur</h3>\n    <div class=\"images-row\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519352/profile_1_xy1psp.png\" alt=\"Profil 1\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519358/profile_2_ky5j3q.png\" alt=\"Profil 2\">\n    </div>\n    <br>\n    <h3>Ajout d’Ingrédient</h3>\n    <div class=\"images-row\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519358/ingredient_ajout_bbfzlc.png\" alt=\"Ajout ingrédient\">\n    </div>\n    <br>\n    <h3>Assistant IA Nutrition</h3>\n    <div class=\"images-row\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519358/assistant_uxl5xr.png\" alt=\"Assistant IA\">\n    </div>\n    <br>\n    <h3>Trackers de progrès</h3>\n    <div class=\"images-row\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519353/tracker_1_txs6zw.png\" alt=\"Calories tracker\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519354/tracker2_h1earx.png\" alt=\"Pas/poids tracker\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519353/tracker3_gvbqxa.png\" alt=\"Protéines/lipides tracker\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519357/bmi_tracker_oplflm.png\" alt=\"IMC tracker\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519355/water_tracker_z3hwqi.png\" alt=\"Eau tracker\">\n    </div>\n    <br>\n    <h3>Détail repas & Recettes</h3>\n    <div class=\"images-row\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519358/meal_details_1_f6sbpz.png\" alt=\"Détail repas 1\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519358/meal_details_2_gk46gk.png\" alt=\"Détail repas 2\">\n      <img src=\"https://res.cloudinary.com/dz7pfctl6/image/upload/v1759519354/meal_details_3_wgkesa.png\" alt=\"Détail repas 3\">\n    </div>\n  </div>\n  <div class=\"section\" style=\"text-align:center;\">\n    <a class=\"button\" href=\"#\">Télécharge l’application & commence !</a>\n    <p style=\"margin: 18px 0 0 0;\">Nous sommes là pour toi. Questions, remarques&nbsp;? Réponds à ce mail !</p>\n  </div>\n  <div class=\"footer\">\n    © 2025 Lift Eat Mobile | Nutrition Tunisienne Digitale 🇹🇳<br>\n    Avec toi dans ta réussite santé !\n  </div>\n</div>\n</body>\n</html>\n`;\n\n// On retourne l'objet utilisateur complet avec la nouvelle propriété emailHtml\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -944,
+        112
+      ],
+      "id": "c9b70507-989e-4c4e-bfbd-3ea1d072d4d7",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "fromEmail": "liftandeat.contact@gmail.com",
+        "toEmail": "={{$json.email}}",
+        "subject": "Bienvenue dans l'aventure Lift Eat ! 🚀",
+        "html": "=={{$json.emailHtml}}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -704,
+        112
+      ],
+      "id": "2076e30a-59b6-4e16-9458-aeb38d51c16a",
+      "name": "Send email",
+      "webhookId": "9fd613fb-4bfd-487c-a0c6-6b4872de087a",
+      "credentials": {
+        "smtp": {
+          "id": "cGa7j16fFlkcbFXL",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://glorious-yak-228.convex.site/waitlist/markWelcome",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"email\": \"={{$('Split In Batches').item.json.email}}\",\n  \"status\": \"welcome_sent\",\n  \"welcome_sent_at\": \"={{new Date().toISOString()}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1200,
+        336
+      ],
+      "id": "4911960d-ec21-467d-897c-d1441de45069",
+      "name": "Update User Status in DB1"
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 15,
+              "unit": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "2ebc45f3-6c12-46b0-9112-78dbc8d213f8",
+      "name": "Toutes les 15 minutes",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -1200,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://glorious-yak-228.convex.site/waitlist/list",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "50"
+            },
+            {
+              "name": "direction",
+              "value": "asc"
+            },
+            {
+              "name": "onlyUnwelcomed",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0e37e47a-9872-40bc-874a-1bff242a73c0",
+      "name": "Fetch Waitlist",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -944,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.item.json.items;\n\n// Si la liste d'items est vide, on arrête là.\nif (!items || items.length === 0) {\n  return [];\n}\n\n// Sinon, on retourne la liste pour que chaque email soit traité un par un.\nreturn items.map(item => ({ json: item }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        -96
+      ],
+      "id": "d5df53cf-f3f0-47e4-bf87-6d008eb93ad4",
+      "name": "Extract Items"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email": {
+      "main": [
+        [
+          {
+            "node": "Update User Status in DB1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update User Status in DB1": {
+      "main": [
+        []
+      ]
+    },
+    "Toutes les 15 minutes": {
+      "main": [
+        [
+          {
+            "node": "Fetch Waitlist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Waitlist": {
+      "main": [
+        [
+          {
+            "node": "Extract Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Items": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "03541742-5c20-4830-afd5-5fe9cfdfc2d7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ab71f2e88df2504630e50ffe7190da654042cea84478252bab32fcc6ff6dc4ba"
+  },
+  "id": "51pqm9cUAiZmYHjX",
+  "tags": [
+    {
+      "name": "welcome",
+      "id": "uhQmfDhrW4VOIC6w",
+      "createdAt": "2025-10-03T22:41:21.558Z",
+      "updatedAt": "2025-10-03T22:41:21.558Z"
+    }
+  ]
+}

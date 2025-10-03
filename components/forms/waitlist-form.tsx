@@ -31,7 +31,7 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
   const locale = useLocale();
   const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = React.useState<string>("");
-  const registerToWaitlist = useMutation(api.waitlist.registerToWaitlist);
+  const joinWaitlist = useMutation(api.mutations.waitlist.joinWaitlist);
 
   const form = useForm<WaitlistFormValues>({
     resolver: zodResolver(schema),
@@ -50,7 +50,7 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
     }
 
     try {
-      const result = await registerToWaitlist({
+      const result = await joinWaitlist({
         email: values.email,
         locale,
         source,
@@ -58,8 +58,10 @@ export function WaitlistForm({ source = "hero", compact = false, className }: Wa
         user_agent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
       });
 
-      if (!result.success) {
-        throw new Error(result.error || "Registration failed");
+      if (result.status === "updated") {
+        setStatus("error");
+        setMessage(t("disposableError")); // Réutilise le message d'erreur existant
+        return;
       }
 
       setStatus("success");

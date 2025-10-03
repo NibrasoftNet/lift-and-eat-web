@@ -12,13 +12,16 @@ export const insertIngredient = internalMutation({
       en: v.optional(v.string()),
       ar: v.optional(v.string()),
     })),
-    descriptionI18n: v.optional(v.object({
-      fr: v.string(),
-      en: v.optional(v.string()),
-      ar: v.optional(v.string()),
-    })),
     nameNormalized: v.string(),
+    synonyms: v.array(v.string()),
     tags: v.array(v.string()),
+    unit: v.string(),
+    macrosPer100g: v.object({
+      kcal: v.number(),
+      protein: v.number(),
+      carbs: v.number(),
+      fat: v.number(),
+    }),
     imageKey: v.optional(v.string()),
     source: v.string(),
     sourceVersion: v.number(),
@@ -69,11 +72,13 @@ export const insertMealIngredient = internalMutation({
 
 export const insertEvent = internalMutation({
   args: {
-    userId: v.optional(v.string()),
-    anonymousId: v.optional(v.string()),
     eventType: v.string(),
-    payload: v.optional(v.any()),
     ts: v.number(),
+    anonymousId: v.string(),
+    userId: v.optional(v.string()),
+    sessionId: v.optional(v.string()),
+    payload: v.any(),
+    appVersion: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("events", args);
