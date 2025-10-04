@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useConvex } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { motion } from 'framer-motion';
+import { AnimatedCard } from '@/components/ui/animated-card';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Package, UtensilsCrossed, Activity, TrendingUp, Clock } from 'lucide-react';
+import { Users, Package, UtensilsCrossed, Activity, TrendingUp, Clock, ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 interface DashboardStats {
   totalIngredients: number;
@@ -66,18 +69,19 @@ export function AdminDashboard() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+        >
+          <div>
+            <div className="h-10 w-64 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
+            <div className="h-4 w-96 bg-gray-200 dark:bg-gray-800 rounded animate-pulse mt-3" />
+          </div>
+        </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader className="pb-2">
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-              </CardContent>
-            </Card>
+            <div key={i} className="h-32 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse" />
           ))}
         </div>
       </div>
@@ -86,140 +90,170 @@ export function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard Admin</h1>
-        <p className="text-gray-600 mt-2">Vue d&apos;ensemble de la plateforme Lift & Eat</p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      >
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+            Dashboard Admin
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2 flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Vue d&apos;ensemble de la plateforme Lift & Eat
+          </p>
+        </div>
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring' }}
+          className="flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 rounded-full border border-green-200 dark:border-green-800"
+        >
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-sm font-medium text-green-700 dark:text-green-400">Système Opérationnel</span>
+        </motion.div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ingrédients</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalIngredients.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              Total dans le catalogue
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Repas</CardTitle>
-            <UtensilsCrossed className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalMeals.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              Total dans le catalogue
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Utilisateurs Actifs (Aujourd&apos;hui)</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.dailyActiveUsers.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              DAU - Daily Active Users
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Événements (Aujourd&apos;hui)</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.totalEvents.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              Total des interactions
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Version Assets</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">v{stats?.assetsVersion}</div>
-            <p className="text-xs text-muted-foreground">
-              Dernière version des données
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Statut Système</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">Opérationnel</div>
-            <p className="text-xs text-muted-foreground">
-              Convex & Clerk connectés
-            </p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <AnimatedCard
+          title="Ingrédients"
+          value={stats?.totalIngredients.toLocaleString() || '0'}
+          description="Total dans le catalogue"
+          icon={Package}
+          delay={0.1}
+          className="bg-gradient-to-br from-blue-50 to-white dark:from-blue-950/20 dark:to-gray-900"
+        />
+        <AnimatedCard
+          title="Repas"
+          value={stats?.totalMeals.toLocaleString() || '0'}
+          description="Total dans le catalogue"
+          icon={UtensilsCrossed}
+          delay={0.2}
+          className="bg-gradient-to-br from-orange-50 to-white dark:from-orange-950/20 dark:to-gray-900"
+        />
+        <AnimatedCard
+          title="Utilisateurs Actifs"
+          value={stats?.dailyActiveUsers.toLocaleString() || '0'}
+          description="DAU - Aujourd'hui"
+          icon={Users}
+          delay={0.3}
+          className="bg-gradient-to-br from-green-50 to-white dark:from-green-950/20 dark:to-gray-900"
+        />
+        <AnimatedCard
+          title="Événements"
+          value={stats?.totalEvents.toLocaleString() || '0'}
+          description="Total des interactions"
+          icon={Activity}
+          delay={0.4}
+          className="bg-gradient-to-br from-purple-50 to-white dark:from-purple-950/20 dark:to-gray-900"
+        />
+        <AnimatedCard
+          title="Version Assets"
+          value={`v${stats?.assetsVersion}`}
+          description="Dernière version"
+          icon={TrendingUp}
+          delay={0.5}
+          className="bg-gradient-to-br from-pink-50 to-white dark:from-pink-950/20 dark:to-gray-900"
+        />
+        <AnimatedCard
+          title="Statut Système"
+          value="Opérationnel"
+          description="Convex & Clerk"
+          icon={Clock}
+          delay={0.6}
+          className="bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/20 dark:to-gray-900"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Actions Rapides</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <a 
-              href={`/${locale}/admin/ingredients`} 
-              className="block p-3 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors"
-            >
-              <div className="font-medium">Gérer les Ingrédients</div>
-              <div className="text-sm text-gray-600">Consulter et rechercher dans le catalogue</div>
-            </a>
-            <a 
-              href={`/${locale}/admin/meals`} 
-              className="block p-3 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors"
-            >
-              <div className="font-medium">Gérer les Repas</div>
-              <div className="text-sm text-gray-600">Consulter les repas et leur composition</div>
-            </a>
-            <a 
-              href={`/${locale}/admin/analytics`} 
-              className="block p-3 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors"
-            >
-              <div className="font-medium">Voir les Analytics</div>
-              <div className="text-sm text-gray-600">KPIs détaillés et métriques d&apos;usage</div>
-            </a>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Card className="h-full border-primary/20 hover:border-primary/40 transition-colors">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                Actions Rapides
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Link 
+                href={`/${locale}/admin/ingredients`} 
+                className="group block p-4 rounded-lg border border-border hover:border-primary bg-gradient-to-r hover:from-primary/5 hover:to-transparent transition-all duration-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors">Gérer les Ingrédients</div>
+                    <div className="text-sm text-muted-foreground">Consulter et rechercher dans le catalogue</div>
+                  </div>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </div>
+              </Link>
+              <Link 
+                href={`/${locale}/admin/meals`} 
+                className="group block p-4 rounded-lg border border-border hover:border-secondary bg-gradient-to-r hover:from-secondary/5 hover:to-transparent transition-all duration-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium text-gray-900 dark:text-white group-hover:text-secondary transition-colors">Gérer les Repas</div>
+                    <div className="text-sm text-muted-foreground">Consulter les repas et leur composition</div>
+                  </div>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-secondary group-hover:translate-x-1 transition-all" />
+                </div>
+              </Link>
+              <Link 
+                href={`/${locale}/admin/analytics`} 
+                className="group block p-4 rounded-lg border border-border hover:border-blue-500 bg-gradient-to-r hover:from-blue-500/5 hover:to-transparent transition-all duration-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">Voir les Analytics</div>
+                    <div className="text-sm text-muted-foreground">KPIs détaillés et métriques d&apos;usage</div>
+                  </div>
+                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                </div>
+              </Link>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Informations Système</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Convex URL</span>
-              <span className="text-sm font-mono">{process.env.NEXT_PUBLIC_CONVEX_URL?.replace('https://', '')}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Environnement</span>
-              <span className="text-sm font-medium">Development</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Dernière mise à jour</span>
-              <span className="text-sm">{new Date().toLocaleDateString('fr-FR')}</span>
-            </div>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Card className="h-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                Informations Système
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="p-3 bg-background rounded-lg border border-border">
+                <div className="text-xs text-muted-foreground mb-1">Convex URL</div>
+                <div className="text-sm font-mono text-primary break-all">{process.env.NEXT_PUBLIC_CONVEX_URL?.replace('https://', '')}</div>
+              </div>
+              <div className="p-3 bg-background rounded-lg border border-border">
+                <div className="text-xs text-muted-foreground mb-1">Environnement</div>
+                <div className="text-sm font-semibold">Development</div>
+              </div>
+              <div className="p-3 bg-background rounded-lg border border-border">
+                <div className="text-xs text-muted-foreground mb-1">Dernière mise à jour</div>
+                <div className="text-sm font-medium">{new Date().toLocaleDateString('fr-FR', { dateStyle: 'long' })}</div>
+              </div>
+              <div className="p-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-lg border border-green-200 dark:border-green-800">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                  <div className="text-sm font-semibold text-green-700 dark:text-green-400">Tous les systèmes opérationnels</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );

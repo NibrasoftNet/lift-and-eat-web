@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { ResponsiveAdminSidebar } from '@/components/admin/ResponsiveAdminSidebar';
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard - Lift & Eat',
@@ -43,10 +43,12 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <AdminSidebar />
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
+      <ResponsiveAdminSidebar />
       <main className="flex-1 overflow-y-auto">
-        <div className="p-6">
+        {/* Spacer for mobile header */}
+        <div className="h-16 lg:hidden" />
+        <div className="p-4 md:p-6 lg:p-8">
           {children}
         </div>
       </main>

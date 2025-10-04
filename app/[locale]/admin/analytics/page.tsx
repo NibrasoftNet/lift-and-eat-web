@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { AnalyticsPage } from '@/components/admin/AnalyticsPage';
+import { ModernAnalyticsPage } from '@/components/admin/ModernAnalyticsPage';
 
 export const metadata: Metadata = {
   title: 'Analytics - Admin',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminAnalyticsPage() {
-  return <AnalyticsPage />;
+  return <ModernAnalyticsPage />;
 }

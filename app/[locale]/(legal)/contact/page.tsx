@@ -32,8 +32,8 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-primary">{t('emailTitle')}</h3>
                   <p className="text-muted-foreground">
-                    <a href="mailto:contact.liftandeat@gmail.com" className="underline underline-offset-4 hover:text-primary transition-colors">
-                      contact.liftandeat@gmail.com
+                    <a href="mailto:liftandeat.contact@gmail.com" className="underline underline-offset-4 hover:text-primary transition-colors">
+                      liftandeat.contact@gmail.com
                     </a>
                   </p>
                 </div>
@@ -45,8 +45,16 @@ export default function ContactPage() {
                       href="tel:+21623013879"
                       dir="ltr"
                       className="rtl:normal-nums underline underline-offset-4 hover:text-primary transition-colors">
-                      +216 (23) 013 879
+                      +216 (23) 013 879 
                     </a>
+                    <p className="text-muted-foreground">
+                    <a
+                      href="tel:+21629345818"
+                      dir="ltr"
+                      className="rtl:normal-nums underline underline-offset-4 hover:text-primary transition-colors">
+                       +216 (29) 345 818
+                    </a>
+                  </p>
                   </p>
                 </div>
               </div>
