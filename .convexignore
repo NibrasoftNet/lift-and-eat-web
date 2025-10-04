@@ -1,0 +1,16 @@
+# Ignore deployment files to prevent accidental deploys
+# This project uses the mobile backend via CONVEX_DEPLOYMENT
+# DO NOT DEPLOY from this project
+
+# Prevent deployment of functions
+actions/
+mutations/
+queries/
+internal.ts
+analytics.ts
+auth.config.ts
+
+# Keep only types and schema for reference
+!_generated/
+!schema.ts
+!waitlist.ts

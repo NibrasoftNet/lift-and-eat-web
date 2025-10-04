@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import React from 'react';
@@ -9,6 +9,8 @@ import { notFound } from 'next/navigation';
 import { ThemeDirectionType } from "@/utlis/types/settings.type";
 import { ClientDirectionProvider } from "@/utlis/providers/client-direction-provider";
 import { ThemeProvider } from "@/utlis/providers/theme-provider";
+import { ConvexClientProvider } from "@/utlis/providers/convex-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -23,13 +25,26 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "Lift & Eat",
     description: "Nutrition platform supported by AI",
+    icons: {
+        icon: "/favicon.ico",
+    },
 };
 
-export default async function RootLayout(props: {
+export const viewport: Viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#F7FBF1" },
+        { media: "(prefers-color-scheme: dark)", color: "#0b0f0a" },
+    ],
+};
+
+export default async function RootLayout({
+    children,
+    params,
+}: {
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
 }) {
-    const { locale } = await props.params;
+    const { locale } = await params;
     if (!routing.locales.includes(locale)) {
         notFound();
     }
@@ -47,20 +62,24 @@ export default async function RootLayout(props: {
             <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <ClientDirectionProvider dir={dir}>
-                    <NextIntlClientProvider
-                        locale={locale}
-                        messages={messages}
-                    >
-                        <ThemeProvider
-                            attribute="class"
-                            enableSystem
-                            disableTransitionOnChange
-                        >
-                            {props.children}
-                        </ThemeProvider>
-                    </NextIntlClientProvider>
-                </ClientDirectionProvider>
+                <ClerkProvider>
+                    <ConvexClientProvider>
+                        <ClientDirectionProvider dir={dir}>
+                            <NextIntlClientProvider
+                                locale={locale}
+                                messages={messages}
+                            >
+                                <ThemeProvider
+                                    attribute="class"
+                                    enableSystem
+                                    disableTransitionOnChange
+                                >
+                                    {children}
+                                </ThemeProvider>
+                            </NextIntlClientProvider>
+                        </ClientDirectionProvider>
+                    </ConvexClientProvider>
+                </ClerkProvider>
             </body>
         </html>
     );

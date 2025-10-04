@@ -45,39 +45,39 @@
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(1 0 0);
+  --background: #F7FBF1; /* Brand background */
   --foreground: oklch(0.141 0.005 285.823);
   --font-geist-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-geist-mono: "SF Mono", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
-  --card: oklch(1 0 0);
+  --card: #ffffff;
   --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
+  --popover: #ffffff;
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.623 0.214 259.815);
-  --primary-foreground: oklch(0.97 0.014 254.604);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --primary: #A4C73B; /* Brand primary green */
+  --primary-foreground: #ffffff;
+  --secondary: #F39C12; /* Brand secondary orange */
+  --secondary-foreground: #ffffff;
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #A4C73B;
+  --chart-1: #A4C73B;
+  --chart-2: #F39C12;
+  --chart-3: #3B82F6;
+  --chart-4: #FDE047;
+  --chart-5: #22C55E;
+  --sidebar: #F7FBF1;
   --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.623 0.214 259.815);
-  --sidebar-primary-foreground: oklch(0.97 0.014 254.604);
+  --sidebar-primary: #A4C73B;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.967 0.001 286.375);
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --sidebar-border: #E2E8F0;
+  --sidebar-ring: #A4C73B;
 }
 
 .dark {
@@ -89,10 +89,10 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.546 0.245 262.881);
-  --primary-foreground: oklch(0.379 0.146 265.522);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
+  --primary: #A4C73B;
+  --primary-foreground: #0b0f0a;
+  --secondary: #F39C12;
+  --secondary-foreground: #0b0f0a;
   --muted: oklch(0.274 0.006 286.033);
   --muted-foreground: oklch(0.705 0.015 286.067);
   --accent: oklch(0.274 0.006 286.033);
@@ -100,20 +100,20 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --ring: #A4C73B;
+  --chart-1: #A4C73B;
+  --chart-2: #F39C12;
+  --chart-3: #60A5FA;
+  --chart-4: #FB923C;
+  --chart-5: #34D399;
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.546 0.245 262.881);
-  --sidebar-primary-foreground: oklch(0.379 0.146 265.522);
+  --sidebar-primary: #A4C73B;
+  --sidebar-primary-foreground: #0b0f0a;
   --sidebar-accent: oklch(0.274 0.006 286.033);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --sidebar-ring: #A4C73B;
 }
 
 @layer base {
@@ -128,9 +128,9 @@
 .section {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 80vh;
   width: 100%;
-  padding: 4rem 1rem;
+  padding: 4rem 1rem 2rem;
   display: flex;
   align-items: center;
 }
@@ -169,6 +169,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 30px;
+  /* Push content below the simulated notch (height ~28px) */
+  padding-top: 28px;
 }
 
 @media (min-width: 768px) {
@@ -182,6 +184,9 @@
   position: relative;
 }
 .gsap-image {
-  z-index: 20;
+  /* Keep visual content behind fixed navbar */
+  z-index: 1;
   position: relative;
+  /* Avoid intercepting header interactions */
+  pointer-events: none;
 }

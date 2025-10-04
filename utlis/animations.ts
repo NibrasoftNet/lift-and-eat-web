@@ -54,6 +54,9 @@ export const createFadeInAnimation = (element: string) => {
   if (elements.length === 0) return;
 
   elements.forEach((el) => {
+    // Set initial state immediately to avoid layout shift
+    gsap.set(el, { opacity: 0, y: 50 });
+    
     gsap.fromTo(
       el,
       { opacity: 0, y: 50 },
@@ -86,14 +89,21 @@ export const createSlideInAnimation = (
   const x = direction === "left" ? -100 : 100;
 
   elements.forEach((el) => {
+    const isImage = (el as Element).classList?.contains("gsap-image");
+
+    // Set initial state immediately to avoid layout shift
+    gsap.set(el, { opacity: 0, x, ...(isImage ? { zIndex: 1 } : {}) });
+
     gsap.fromTo(
       el,
-      { opacity: 0, x },
+      { opacity: 0, x, ...(isImage ? { zIndex: 1 } : {}) },
       {
         opacity: 1,
         x: 0,
         duration: 1,
         ease: "power2.out",
+        // keep images behind navbar during the whole animation
+        ...(isImage ? { zIndex: 1 } : {}),
         scrollTrigger: {
           trigger: el,
           start: "top 90%",

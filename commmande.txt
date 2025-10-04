@@ -1,0 +1,2316 @@
+PS C:\Users\jawis\OneDrive\Desktop\lift-and-eat-web> npx convex function-spec --prod
+{
+  "url": "https://glorious-yak-228.convex.cloud",
+  "functions": [
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "date": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/planDays.js:getDailyPlanForDate",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "date": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          },
+          "slot": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/planDays.js:getEntriesBySlot",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {}
+      },
+      "functionType": "Query",
+      "identifier": "queries/plans.js:getCurrent",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/plans.js:getDetails",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {}
+      },
+      "functionType": "Query",
+      "identifier": "queries/plans.js:list",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "refKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "refType": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/savedMeals.js:isSaved",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/savedMeals.js:list",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {}
+      },
+      "functionType": "Query",
+      "identifier": "queries/users.js:getMe",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {}
+      },
+      "functionType": "Query",
+      "identifier": "queries/users.js:getUserPreferences",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "email": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/waitlist.js:findByEmail",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "cursorCreatedAt": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "direction": {
+            "fieldType": {
+              "type": "union",
+              "value": [
+                {
+                  "type": "literal",
+                  "value": "asc"
+                },
+                {
+                  "type": "literal",
+                  "value": "desc"
+                }
+              ]
+            },
+            "optional": true
+          },
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/waitlist.js:list",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "appVersion": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "avatarUrl": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "displayName": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "locale": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "platform": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "preferences": {
+            "fieldType": {
+              "type": "any"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/users.js:ensureUser",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "preferences": {
+            "fieldType": {
+              "type": "any"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/users.js:upsertUserPreferences",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "email": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "ip_address": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "locale": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "origin": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "source": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "user_agent": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/waitlist.js:joinWaitlist",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "day": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/analytics.js:dailyActiveUsers",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "day": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/analytics.js:dailyEventCounts",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "eventType": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "from": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "to": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/analytics.js:latencyStats",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "day": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/analytics.js:listActiveUsersForDay",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "from": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "to": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/analytics.js:listActiveUsersForRange",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "from": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "kind": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "to": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/analytics.js:topViewedAssets",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "slug": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:getIngredientBySlug",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "slug": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:getMealBySlug",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "slug": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:getMealIngredientsBySlug",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:listIngredients",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "tag": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:listIngredientsByTag",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:listMeals",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "tag": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:listMealsByTag",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "q": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/assets.js:searchIngredients",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "clientId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/customIngredients.js:getByClientId",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/customIngredients.js:listMine",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "q": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/customIngredients.js:searchMine",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "limit": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "page": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/customMeals.js:list",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {}
+      },
+      "functionType": "Query",
+      "identifier": "queries/debug.js:whoami",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "_ts": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "day": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/mealPlans.js:listByPlanDay",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "day": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/mealPlans.js:listEntriesByDay",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "endDay": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "startDay": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Query",
+      "identifier": "queries/mealPlans.js:listEntriesByWeek",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "key": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "value": {
+            "fieldType": {
+              "type": "any"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/assets.js:setMetaKey",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "internal"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "data": {
+            "fieldType": {
+              "type": "object",
+              "value": {
+                "createdAt": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": true
+                },
+                "imageKey": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "macrosPer100g": {
+                  "fieldType": {
+                    "type": "object",
+                    "value": {
+                      "carbs": {
+                        "fieldType": {
+                          "type": "number"
+                        },
+                        "optional": false
+                      },
+                      "fat": {
+                        "fieldType": {
+                          "type": "number"
+                        },
+                        "optional": false
+                      },
+                      "kcal": {
+                        "fieldType": {
+                          "type": "number"
+                        },
+                        "optional": false
+                      },
+                      "protein": {
+                        "fieldType": {
+                          "type": "number"
+                        },
+                        "optional": false
+                      }
+                    }
+                  },
+                  "optional": false
+                },
+                "name": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "nameI18n": {
+                  "fieldType": {
+                    "type": "object",
+                    "value": {
+                      "ar": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": true
+                      },
+                      "en": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": true
+                      },
+                      "fr": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": false
+                      }
+                    }
+                  },
+                  "optional": true
+                },
+                "slug": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "source": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "sourceVersion": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "synonyms": {
+                  "fieldType": {
+                    "type": "array",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "optional": false
+                },
+                "tags": {
+                  "fieldType": {
+                    "type": "array",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "optional": false
+                },
+                "unit": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                }
+              }
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/assets.js:upsertIngredient",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "internal"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "data": {
+            "fieldType": {
+              "type": "object",
+              "value": {
+                "createdAt": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": true
+                },
+                "descriptionI18n": {
+                  "fieldType": {
+                    "type": "object",
+                    "value": {
+                      "ar": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": true
+                      },
+                      "en": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": true
+                      },
+                      "fr": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": false
+                      }
+                    }
+                  },
+                  "optional": true
+                },
+                "imageKey": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "name": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "nameI18n": {
+                  "fieldType": {
+                    "type": "object",
+                    "value": {
+                      "ar": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": true
+                      },
+                      "en": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": true
+                      },
+                      "fr": {
+                        "fieldType": {
+                          "type": "string"
+                        },
+                        "optional": false
+                      }
+                    }
+                  },
+                  "optional": true
+                },
+                "slug": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "source": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "sourceVersion": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "tags": {
+                  "fieldType": {
+                    "type": "array",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "optional": false
+                }
+              }
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/assets.js:upsertMeal",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "internal"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "data": {
+            "fieldType": {
+              "type": "object",
+              "value": {
+                "cookingMethod": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "ingredientSlug": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "mealSlug": {
+                  "fieldType": {
+                    "type": "string"
+                  },
+                  "optional": false
+                },
+                "quantityGr": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                }
+              }
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/assets.js:upsertMealIngredient",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "internal"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "barcode": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "clientId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "imageKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "macrosPer100g": {
+            "fieldType": {
+              "type": "object",
+              "value": {
+                "carbs": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "fat": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "kcal": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "protein": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                }
+              }
+            },
+            "optional": false
+          },
+          "name": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "source": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "unit": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/customIngredients.js:upsert",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "clientId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "imageKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "macrosPer100g": {
+            "fieldType": {
+              "type": "object",
+              "value": {
+                "carbs": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "fat": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "kcal": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                },
+                "protein": {
+                  "fieldType": {
+                    "type": "number"
+                  },
+                  "optional": false
+                }
+              }
+            },
+            "optional": false
+          },
+          "name": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/customMeals.js:upsert",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "appVersion": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "eventType": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "payload": {
+            "fieldType": {
+              "type": "any"
+            },
+            "optional": true
+          },
+          "sessionId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/events.js:trackEvent",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {}
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/initTestUsers.js:getTestUsers",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "displayName": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "email": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "userId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/initTestUsers.js:initTestUser",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "userId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/initTestUsers.js:resetTestUser",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "clientId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "day": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "idempotenceKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "kind": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": true
+          },
+          "quantity": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": false
+          },
+          "refKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "refType": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "slot": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "unit": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/mealPlans.js:addEntry",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "entryId": {
+            "fieldType": {
+              "tableName": "plan_entries",
+              "type": "id"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/mealPlans.js:removeEntry",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "entryId": {
+            "fieldType": {
+              "tableName": "plan_entries",
+              "type": "id"
+            },
+            "optional": false
+          },
+          "quantity": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": false
+          },
+          "unit": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/mealPlans.js:updateEntry",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "calories": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "carbs": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "clientId": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "completed": {
+            "fieldType": {
+              "type": "boolean"
+            },
+            "optional": true
+          },
+          "current": {
+            "fieldType": {
+              "type": "boolean"
+            },
+            "optional": true
+          },
+          "durationWeeks": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "fat": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "goal": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "initialWeight": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "name": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "protein": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "startDate": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "targetWeight": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "unit": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/plans.js:create",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/plans.js:remove",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/plans.js:setCurrent",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "calories": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "carbs": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "completed": {
+            "fieldType": {
+              "type": "boolean"
+            },
+            "optional": true
+          },
+          "current": {
+            "fieldType": {
+              "type": "boolean"
+            },
+            "optional": true
+          },
+          "durationWeeks": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "fat": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "goal": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "initialWeight": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "name": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "planId": {
+            "fieldType": {
+              "tableName": "plans",
+              "type": "id"
+            },
+            "optional": false
+          },
+          "protein": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "startDate": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "targetWeight": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "unit": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/plans.js:update",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "refKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "refType": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/savedMeals.js:remove",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "note": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "refKey": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          },
+          "refType": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Mutation",
+      "identifier": "mutations/savedMeals.js:save",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "args": {
+        "type": "object",
+        "value": {
+          "adminToken": {
+            "fieldType": {
+              "type": "string"
+            },
+            "optional": true
+          },
+          "assetsDataVersion": {
+            "fieldType": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "ingredients": {
+            "fieldType": {
+              "type": "array",
+              "value": {
+                "type": "object",
+                "value": {
+                  "createdAt": {
+                    "fieldType": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  },
+                  "imageKey": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "macrosPer100g": {
+                    "fieldType": {
+                      "type": "object",
+                      "value": {
+                        "carbs": {
+                          "fieldType": {
+                            "type": "number"
+                          },
+                          "optional": false
+                        },
+                        "fat": {
+                          "fieldType": {
+                            "type": "number"
+                          },
+                          "optional": false
+                        },
+                        "kcal": {
+                          "fieldType": {
+                            "type": "number"
+                          },
+                          "optional": false
+                        },
+                        "protein": {
+                          "fieldType": {
+                            "type": "number"
+                          },
+                          "optional": false
+                        }
+                      }
+                    },
+                    "optional": false
+                  },
+                  "name": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "nameI18n": {
+                    "fieldType": {
+                      "type": "object",
+                      "value": {
+                        "ar": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "en": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "fr": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": false
+                        }
+                      }
+                    },
+                    "optional": true
+                  },
+                  "slug": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "source": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "sourceVersion": {
+                    "fieldType": {
+                      "type": "number"
+                    },
+                    "optional": false
+                  },
+                  "synonyms": {
+                    "fieldType": {
+                      "type": "array",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "optional": false
+                  },
+                  "tags": {
+                    "fieldType": {
+                      "type": "array",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "optional": false
+                  },
+                  "unit": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  }
+                }
+              }
+            },
+            "optional": false
+          },
+          "mealIngredients": {
+            "fieldType": {
+              "type": "array",
+              "value": {
+                "type": "object",
+                "value": {
+                  "cookingMethod": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "ingredientSlug": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "mealSlug": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "quantityGr": {
+                    "fieldType": {
+                      "type": "number"
+                    },
+                    "optional": false
+                  }
+                }
+              }
+            },
+            "optional": false
+          },
+          "meals": {
+            "fieldType": {
+              "type": "array",
+              "value": {
+                "type": "object",
+                "value": {
+                  "createdAt": {
+                    "fieldType": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  },
+                  "descriptionI18n": {
+                    "fieldType": {
+                      "type": "object",
+                      "value": {
+                        "ar": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "en": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "fr": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": false
+                        }
+                      }
+                    },
+                    "optional": true
+                  },
+                  "imageKey": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "name": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "nameI18n": {
+                    "fieldType": {
+                      "type": "object",
+                      "value": {
+                        "ar": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "en": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "fr": {
+                          "fieldType": {
+                            "type": "string"
+                          },
+                          "optional": false
+                        }
+                      }
+                    },
+                    "optional": true
+                  },
+                  "slug": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "source": {
+                    "fieldType": {
+                      "type": "string"
+                    },
+                    "optional": false
+                  },
+                  "sourceVersion": {
+                    "fieldType": {
+                      "type": "number"
+                    },
+                    "optional": false
+                  },
+                  "tags": {
+                    "fieldType": {
+                      "type": "array",
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "optional": false
+                  }
+                }
+              }
+            },
+            "optional": false
+          }
+        }
+      },
+      "functionType": "Action",
+      "identifier": "actions/seedAssets.js:seedAssets",
+      "returns": {
+        "type": "any"
+      },
+      "visibility": {
+        "kind": "public"
+      }
+    },
+    {
+      "functionType": "HttpAction",
+      "method": "GET",
+      "path": "/waitlist/list"
+    },
+    {
+      "functionType": "HttpAction",
+      "method": "GET",
+      "path": "/waitlist/findByEmail"
+    },
+    {
+      "functionType": "HttpAction",
+      "method": "POST",
+      "path": "/events/track"
+    }
+  ]
+}
+PS C:\Users\jawis\OneDrive\Desktop\lift-and-eat-web>

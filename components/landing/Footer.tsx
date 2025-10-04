@@ -5,6 +5,7 @@ import Link from 'next/link';
 import FacebookIcon from '@/components/icons/FacebookIcon';
 import TiktokIcon from '@/components/icons/TiktokIcon';
 import InstagramIcon from '@/components/icons/InstagramIcon';
+import { WaitlistForm } from '@/components/forms/waitlist-form';
 
 const Footer = () => {
   const t = useTranslations("Landing");
@@ -27,6 +28,9 @@ const Footer = () => {
             <p className="text-gray-400 max-w-md">
               {t("footerDescription")}
             </p>
+            <div className="mt-4 max-w-md">
+              <WaitlistForm compact source="footer" />
+            </div>
             <div className="flex space-x-4 mt-6">
               <Link href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                 <FacebookIcon svgClassName="h-10 w-10" />
@@ -54,8 +58,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">{t("footerLegalTitle")}</h4>
             <ul className="space-y-2">
               <li><Link href="/policy" className="text-gray-400 hover:text-white transition-colors">{t("footerPrivacyPolicy")}</Link></li>
-                <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors">{t("footerTermsOfService")}</Link></li>
-                  <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors">{t("footerContactUs")}</Link></li>
+              <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors">{t("footerTermsOfService")}</Link></li>
+              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors">{t("footerContactUs")}</Link></li>
             </ul>
           </div>
         </div>

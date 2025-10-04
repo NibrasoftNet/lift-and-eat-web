@@ -1,0 +1,10 @@
+{
+  "node": {
+    "externalPackages": [
+      "@clerk/nextjs"
+    ]
+  },
+  "functions": "convex/",
+  "generateCommonJSApi": false,
+  "skipLibCheck": false
+}

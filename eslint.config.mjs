@@ -11,7 +11,7 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: ["**/.next/**", "**/node_modules/**", "**/dist/**"],
+    ignores: ["**/.next/**", "**/node_modules/**", "**/dist/**", "**/__trash/**"],
   },
   // Existing Next.js and Prettier compatibility
   ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),

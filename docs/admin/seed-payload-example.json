@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json.schemastore.org/unknown.json",
+  "ingredients": [
+    {
+      "slug": "chicken_breast",
+      "name": "Blanc de poulet",
+      "nameI18n": { "fr": "Blanc de poulet", "en": "Chicken breast", "ar": "صدر دجاج" },
+      "synonyms": ["poulet blanc", "chicken filet"],
+      "tags": ["protein", "meat", "halal"],
+      "unit": "g",
+      "macrosPer100g": { "kcal": 165, "protein": 31, "carbs": 0, "fat": 3.6 },
+      "imageKey": "ingredients/chicken_breast.jpg",
+      "source": "seed",
+      "sourceVersion": 2,
+      "createdAt": 1730460000000
+    },
+    {
+      "slug": "olive_oil",
+      "name": "Huile d'olive",
+      "nameI18n": { "fr": "Huile d'olive", "en": "Olive oil", "ar": "زيت الزيتون" },
+      "synonyms": ["huile olive", "olive oil"],
+      "tags": ["fat", "mediterranean"],
+      "unit": "g",
+      "macrosPer100g": { "kcal": 884, "protein": 0, "carbs": 0, "fat": 100 },
+      "imageKey": "ingredients/olive_oil.jpg",
+      "source": "seed",
+      "sourceVersion": 2,
+      "createdAt": 1730460000000
+    }
+  ],
+  "meals": [
+    {
+      "slug": "grilled_chicken_salad",
+      "name": "Salade de poulet grillé",
+      "nameI18n": {
+        "fr": "Salade de poulet grillé",
+        "en": "Grilled chicken salad",
+        "ar": "سلطة دجاج مشوي"
+      },
+      "descriptionI18n": {
+        "fr": "Salade riche en protéines avec poulet grillé et huile d'olive.",
+        "en": "High-protein salad with grilled chicken and olive oil.",
+        "ar": "سلطة غنية بالبروتين مع دجاج مشوي وزيت الزيتون."
+      },
+      "tags": ["protein", "salad", "mediterranean"],
+      "imageKey": "meals/grilled_chicken_salad.jpg",
+      "source": "seed",
+      "sourceVersion": 2,
+      "createdAt": 1730460000000
+    }
+  ],
+  "mealIngredients": [
+    {
+      "mealSlug": "grilled_chicken_salad",
+      "ingredientSlug": "chicken_breast",
+      "quantityGr": 150,
+      "cookingMethod": "grilled"
+    },
+    {
+      "mealSlug": "grilled_chicken_salad",
+      "ingredientSlug": "olive_oil",
+      "quantityGr": 10
+    }
+  ],
+  "assetsDataVersion": 2
+}
